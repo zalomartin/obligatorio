@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author RodrigoL
+ * @author RodrigoL lalala
  */
 @Entity
 @Table(name = "know_error")
