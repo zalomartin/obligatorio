@@ -14,7 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 /**
  *
- * @author rololaaa
+ * @author rololaaa probano
  */
 @Stateless
 @Path("/knowError")
