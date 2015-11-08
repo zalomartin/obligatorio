@@ -9,7 +9,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author rolol
+ * @author R
  */
 @Local
 public interface KnowErrorService {

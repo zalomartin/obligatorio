@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author rolol
+ * @author R
  */
 @Stateless
 public class KnowErrorBean implements KnowErrorService {
