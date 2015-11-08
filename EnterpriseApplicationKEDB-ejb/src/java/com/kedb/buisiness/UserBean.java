@@ -5,7 +5,8 @@
  */
 package com.kedb.buisiness;
 
-import com.kedb.entities.Role;
+import com.kedb.entities.RoleEntity;
+import com.kedb.entities.UserEntity;
 import com.kedb.persistence.UserDaoBeanService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,18 +22,19 @@ public class UserBean implements UserBeanService {
 private UserDaoBeanService userDao;
 
     @Override
-    public void createUser(String userName, Role role) {
-        userDao.createUser(userName, role);
+    public void createUser(String userName, RoleEntity role) {
+        UserEntity user = new UserEntity();
+        user.setUserName(userName);
+        user.setRole(role);
+        userDao.createUser(user);
     }
 
     @Override
     public void deleteUser(long id) {
-        userDao.deleteUser(id);
     }
 
     @Override
-    public void modifyUser(long id, String userName, Role role) {
-        userDao.modifyUser(id, userName, role);
+    public void modifyUser(long id, String userName, RoleEntity role) {
     }
 
 }

@@ -5,8 +5,11 @@
  */
 package com.kedb.persistence;
 
-import com.kedb.entities.Role;
+import com.kedb.entities.RoleEntity;
+import com.kedb.entities.UserEntity;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,16 +17,26 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class UserDaoBean implements UserDaoBeanService {
+    @PersistenceContext
+    EntityManager em;
 
     @Override
-    public void createUser(String userName, Role role) {
+    public void createUser(UserEntity user) {
+        UserEntity userEntity = null;
+        //TODO:Falta validar que el usuario no exista
+        userEntity = new UserEntity();
+        UserEntity userNew = (UserEntity)user;
+        userEntity.setUserName(userNew.getUserName());
+        userEntity.setRole(userNew.getRole());
+        em.persist(userEntity);
+    }
+    
+    @Override
+    public void deleteUser(UserEntity user) {
     }
 
     @Override
-    public void deleteUser(long id) {
+    public void modifyUser(UserEntity user) {
     }
-
-    @Override
-    public void modifyUser(long id, String userName, Role role) {
-    }
+    
 }

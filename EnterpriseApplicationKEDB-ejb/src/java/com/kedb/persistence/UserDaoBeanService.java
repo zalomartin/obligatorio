@@ -5,7 +5,8 @@
  */
 package com.kedb.persistence;
 
-import com.kedb.entities.Role;
+import com.kedb.entities.RoleEntity;
+import com.kedb.entities.UserEntity;
 import javax.ejb.Local;
 
 /**
@@ -15,8 +16,8 @@ import javax.ejb.Local;
 @Local
 public interface UserDaoBeanService {
 
-    void createUser(String userName, Role role);
-    void deleteUser(long id);
-    void modifyUser(long id, String userName, Role role);
+    void deleteUser(UserEntity user);
+    void modifyUser(UserEntity user);
+    void createUser(UserEntity user);
     
 }

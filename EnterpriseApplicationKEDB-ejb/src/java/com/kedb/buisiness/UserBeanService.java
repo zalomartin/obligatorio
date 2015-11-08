@@ -5,7 +5,7 @@
  */
 package com.kedb.buisiness;
 
-import com.kedb.entities.Role;
+import com.kedb.entities.RoleEntity;
 import javax.ejb.Local;
 
 /**
@@ -15,8 +15,8 @@ import javax.ejb.Local;
 @Local
 public interface UserBeanService {
 
-    void createUser(String userName, Role role);
+    void createUser(String userName, RoleEntity role);
     void deleteUser(long id);
-    void modifyUser(long id, String userName, Role role);
+    void modifyUser(long id, String userName, RoleEntity role);
     
 }

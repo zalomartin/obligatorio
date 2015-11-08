@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kedb.entities;
 
 import java.io.Serializable;
@@ -36,7 +31,7 @@ public class KnowError implements Serializable {
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)   
     @Size(min = 1, max = 250)
     @NotNull
@@ -46,20 +41,20 @@ public class KnowError implements Serializable {
     public KnowError() {
     }
 
-    public KnowError(Integer id) {
+    public KnowError(Long id) {
         this.id = id;
     }
 
-    public KnowError(Integer id, String name) {
+    public KnowError(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
