@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.kedb.webServices.KnowErrorWebService.class);
+        resources.add(com.kedb.webServices.UserWebService.class);
     }
     
 }
