@@ -10,9 +10,10 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author rolol
+ * @author
  */
-@javax.ws.rs.ApplicationPath("webresources")
+//@javax.ws.rs.ApplicationPath("webresources")
+@javax.ws.rs.ApplicationPath("")
 public class ApplicationConfig extends Application {
 
     @Override
