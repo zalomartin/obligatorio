@@ -5,7 +5,7 @@
  */
 package com.kedb.persistence;
 
-import com.kedb.entities.KnowErrorEntity;
+import com.kedb.entities.KnowError;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +22,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
     @Override
     public void createKnowError(String name) {
         //TODO: validaciones,logica de bd
-        KnowErrorEntity k = new KnowErrorEntity();
+        KnowError k = new KnowError();
         k.setName(name);
         em.persist(k);
     }

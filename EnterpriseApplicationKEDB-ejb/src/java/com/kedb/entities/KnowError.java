@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "KnowError.findAll", query = "SELECT k FROM KnowError k"),
     @NamedQuery(name = "KnowError.findById", query = "SELECT k FROM KnowError k WHERE k.id = :id"),
     @NamedQuery(name = "KnowError.findByName", query = "SELECT k FROM KnowError k WHERE k.name = :name")})
-public class KnowErrorEntity implements Serializable {
+public class KnowError implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -38,14 +38,14 @@ public class KnowErrorEntity implements Serializable {
     @Column(name = "name", nullable = true, unique = true)
     private String name;
 
-    public KnowErrorEntity() {
+    public KnowError() {
     }
 
-    public KnowErrorEntity(Long id) {
+    public KnowError(Long id) {
         this.id = id;
     }
 
-    public KnowErrorEntity(Long id, String name) {
+    public KnowError(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -76,10 +76,10 @@ public class KnowErrorEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof KnowErrorEntity)) {
+        if (!(object instanceof KnowError)) {
             return false;
         }
-        KnowErrorEntity other = (KnowErrorEntity) object;
+        KnowError other = (KnowError) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
