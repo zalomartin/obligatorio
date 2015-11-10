@@ -8,6 +8,7 @@ package com.kedb.webServices;
 import com.kedb.buisiness.KnowErrorService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.bean.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,7 +17,8 @@ import javax.ws.rs.QueryParam;
  *
  * @author rololaaa y gonzalo martin
  */
-@Stateless
+//@Stateless
+@RequestScoped
 @Path("/knowError")
 public class KnowErrorWebService {
 
@@ -24,7 +26,8 @@ public class KnowErrorWebService {
 private KnowErrorService bLocal;
 
    @POST
-   @Consumes({"application/json", "application/x-www-form-urlencoded"})
+   @Path("/createKE")
+   @Consumes("application/x-www-form-urlencoded")
  // @Consumes(MediaType.APPLICATION_JSON)
     public void addKnowError(@QueryParam("name") String name) {
        //TODO: remove
