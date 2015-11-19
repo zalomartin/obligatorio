@@ -17,7 +17,7 @@ import javax.ws.rs.QueryParam;
  *
  * @author rololaaa y gonzalo martin
  */
-//@Stateless
+@Stateless
 @RequestScoped
 @Path("/knowError")
 public class KnowErrorWebService {
