@@ -18,5 +18,6 @@ public interface UserBeanService {
     void createUser(String userName, RoleEntity role);
     void deleteUser(long id);
     void modifyUser(long id, String userName, RoleEntity role);
+    void findUser(long id);
     
 }

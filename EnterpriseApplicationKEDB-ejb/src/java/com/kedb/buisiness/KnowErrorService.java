@@ -14,4 +14,6 @@ import javax.ejb.Local;
 @Local
 public interface KnowErrorService {
     public void createKnowError(String name);
+
+    void findKnowError();
 }
