@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.bean.RequestScoped;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
@@ -17,7 +18,7 @@ import javax.ws.rs.QueryParam;
  *
  * @author rololaaa y gonzalo martin
  */
-@Stateless
+//@Stateless
 @RequestScoped
 @Path("/knowError")
 public class KnowErrorWebService {
@@ -28,10 +29,10 @@ private KnowErrorService bLocal;
    @POST
    @Path("/createKE")
    @Consumes("application/x-www-form-urlencoded")
- // @Consumes(MediaType.APPLICATION_JSON)
-    public void addKnowError(@QueryParam("name") String name) {
-       //TODO: remove
-        System.out.println("-----------nombre"+ name);
-        bLocal.createKnowError(name);
+ //  @Consumes({"application/json", "application/x-www-form-urlencoded"})
+    public void addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category) {
+ //     public void addKnowError(@QueryParam("cause") String cause){  
+        System.out.println("-----------cause"+ cause);
+        bLocal.createKnowError(cause, solution, workaround, category);
     }
 }
