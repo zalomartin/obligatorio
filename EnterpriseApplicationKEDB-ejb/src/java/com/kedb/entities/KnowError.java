@@ -14,17 +14,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author RodrigoL lalala
- */
+
 @Entity
 @Table(name = "know_error")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "KnowError.findAll", query = "SELECT k FROM KnowError k"),
-    @NamedQuery(name = "KnowError.findById", query = "SELECT k FROM KnowError k WHERE k.id = :id"),
-    @NamedQuery(name = "KnowError.findByName", query = "SELECT k FROM KnowError k WHERE k.name = :name")})
+//@NamedQueries({
+  //  @NamedQuery(name = "KnowError.findAll", query = "SELECT k FROM KnowError k"),
+  //  @NamedQuery(name = "KnowError.findById", query = "SELECT k FROM KnowError k WHERE k.id = :id"),
+  //  @NamedQuery(name = "KnowError.findByName", query = "SELECT k FROM KnowError k WHERE k.name = :name")})
 public class KnowError implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,19 +32,51 @@ public class KnowError implements Serializable {
     @Basic(optional = false)   
     @Size(min = 1, max = 250)
     @NotNull
-    @Column(name = "name", nullable = true, unique = true)
-    private String name;
-
+    
+    @Column(name = "cause", nullable = false, unique = false)
+    private String cause;
+    @Column(name = "solution", nullable = false, unique = false)
+    private String solution;
+    @Column(name = "workaround", nullable = true, unique = false)
+    private String workaround;
+    @Column(name = "category", nullable = false, unique = false)
+    private String category;
+    
+    //Constructores
     public KnowError() {
     }
 
-    public KnowError(Long id) {
+    public KnowError(Long id, String cause, String solution, String workaround, String category) {
         this.id = id;
+        this.cause = cause;
+        this.solution = solution;
+        this.workaround = workaround;
+        this.category = category;
     }
 
-    public KnowError(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    //Set y Get
+    public String getCategory() {
+        return category;
+    }
+    
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getWorkaround() {
+        return workaround;
+    }
+
+    public void setWorkaround(String workaround) {
+        this.workaround = workaround;
+    }
+
+    public String getSolution() {
+        return solution;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution;
     }
 
     public Long getId() {
@@ -58,12 +87,12 @@ public class KnowError implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCause() {
+        return cause;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCause(String cause) {
+        this.cause = cause;
     }
 
     @Override

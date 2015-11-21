@@ -13,5 +13,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface KnowErrorDao {
-    public void createKnowError(String name);
+    public void createKnowError(String cause, String solution, String workaround, String category);
 }

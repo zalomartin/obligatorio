@@ -22,10 +22,7 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.CursorMarkParams;
 
-/**
- *
- * @author R
- */
+
 @Stateless
 public class KnowErrorBean implements KnowErrorService {
 
@@ -33,21 +30,13 @@ public class KnowErrorBean implements KnowErrorService {
 private KnowErrorDao knowErrorDao;
     
     @Override
-    public void createKnowError(String name) {
+    public void createKnowError(String cause, String solution, String workaround, String category) {
+        System.out.println("llego");
         try {   
-        HttpSolrClient solr = new HttpSolrClient("http://localhost:8983/solr/kedb");                    
-        SolrInputDocument document = new SolrInputDocument();
-        document.addField("name", name);  
-        UpdateRequest req = new UpdateRequest();
-        req.setAction( UpdateRequest.ACTION.COMMIT, false, false );
-        req.add(document);
-        UpdateResponse response = req.process(solr);
-        System.out.println("RESPONSE " +response);
-        solr.commit();              
+            knowErrorDao.createKnowError(cause, solution, workaround, category);
         } catch (Exception ex) {
             Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
         }          
-      //   knowErrorDao.createKnowError(name);
     }    
 
     @Override
