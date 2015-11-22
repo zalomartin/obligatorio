@@ -5,13 +5,11 @@
  */
 package com.kedb.persistence;
 
+import com.kedb.entities.KnowError;
 import javax.ejb.Local;
 
-/**
- *
- * @author rolol
- */
+
 @Local
 public interface KnowErrorDao {
-    public void createKnowError(String cause, String solution, String workaround, String category);
+    void createKnowError(KnowError knowError);
 }

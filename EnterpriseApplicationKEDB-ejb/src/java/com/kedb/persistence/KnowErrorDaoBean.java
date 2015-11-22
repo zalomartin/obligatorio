@@ -17,14 +17,26 @@ import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
+/**
+ *
+ * @author rolol
+ */
 @Stateless
 public class KnowErrorDaoBean implements KnowErrorDao {
   @PersistenceContext
   EntityManager em;
   
     @Override
-    public void createKnowError(String cause, String solution, String workaround, String category) {
-        //TODO: validaciones,logica de bd, try generico + try para cada uno de los métodos
+    public void createKnowError(KnowError knowError) {
+        KnowError knowErrorEntity = null;
+        knowErrorEntity = new KnowError();
+        KnowError knowErrorNew = (KnowError)knowError;
+        knowErrorEntity.setCause(knowErrorNew.getCause());
+        knowErrorEntity.setSolution(knowErrorNew.getSolution());
+        knowErrorEntity.setWorkaround(knowErrorNew.getWorkaround());
+        knowErrorEntity.setCategory(knowErrorNew.getSolution());
+        em.persist(knowErrorEntity);
+    //TODO: validaciones,logica de bd, try generico + try para cada uno de los métodos
         //Insertamos en MySq
      /*   try {
         KnowError k = new KnowError();
@@ -40,10 +52,10 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         try {
         HttpSolrClient solr = new HttpSolrClient("http://localhost:8983/solr/kedb");                    
         SolrInputDocument document = new SolrInputDocument();
-        document.addField("cause", cause);
-        document.addField("solution", solution);
-        document.addField("workaround", workaround);
-        document.addField("category", category); 
+        document.addField("cause", knowErrorNew.getCause());
+        document.addField("solution", knowErrorNew.getSolution());
+        document.addField("workaround", knowErrorNew.getWorkaround());
+        document.addField("category", knowErrorNew.getCategory()); 
         UpdateRequest req = new UpdateRequest();
         req.setAction( UpdateRequest.ACTION.COMMIT, false, false );
         req.add(document);

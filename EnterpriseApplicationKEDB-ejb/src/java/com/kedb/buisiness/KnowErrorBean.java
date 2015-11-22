@@ -5,22 +5,26 @@
  */
 package com.kedb.buisiness;
 
+import com.kedb.entities.KnowError;
 import com.kedb.persistence.KnowErrorDao;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.request.AbstractUpdateRequest;
+import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
 import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
+
 import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.params.CursorMarkParams;
 
 
 @Stateless
@@ -28,12 +32,17 @@ public class KnowErrorBean implements KnowErrorService {
 
 @EJB
 private KnowErrorDao knowErrorDao;
-    
+
     @Override
     public void createKnowError(String cause, String solution, String workaround, String category) {
         System.out.println("llego");
         try {   
-            knowErrorDao.createKnowError(cause, solution, workaround, category);
+            KnowError knowErrorEntity = new KnowError();
+            knowErrorEntity.setCause(cause);
+            knowErrorEntity.setSolution(solution);
+            knowErrorEntity.setWorkaround(workaround);
+            knowErrorEntity.setCategory(category);
+            knowErrorDao.createKnowError(knowErrorEntity);
         } catch (Exception ex) {
             Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
         }          

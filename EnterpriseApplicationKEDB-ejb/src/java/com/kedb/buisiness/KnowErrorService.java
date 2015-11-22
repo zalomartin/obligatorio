@@ -7,9 +7,13 @@ package com.kedb.buisiness;
 
 import javax.ejb.Local;
 
-
+/**
+ *
+ * @author R
+ */
 @Local
 public interface KnowErrorService {
-    public void createKnowError(String cause, String solution, String workaround, String category);
+    
+    void createKnowError(String cause, String solution, String workaround, String category);
     void findKnowError();
 }

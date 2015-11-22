@@ -16,39 +16,46 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
-@Table(name = "know_error")
+@Table(name = "KNOW_ERROR")
 @XmlRootElement
-//@NamedQueries({
-  //  @NamedQuery(name = "KnowError.findAll", query = "SELECT k FROM KnowError k"),
-  //  @NamedQuery(name = "KnowError.findById", query = "SELECT k FROM KnowError k WHERE k.id = :id"),
-  //  @NamedQuery(name = "KnowError.findByName", query = "SELECT k FROM KnowError k WHERE k.name = :name")})
+
+/*@NamedQueries({
+    @NamedQuery(name = "KnowError.findAll", query = "SELECT k FROM KnowError k"),
+    @NamedQuery(name = "KnowError.findById", query = "SELECT k FROM KnowError k WHERE k.id = :id"),
+    @NamedQuery(name = "KnowError.findByName", query = "SELECT k FROM KnowError k WHERE k.name = :name")})*/
+
 public class KnowError implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+    
     @Id
-    @Basic(optional = false)
+   // @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "KEDB_ID")
     private Long id;
-    @Basic(optional = false)   
-    @Size(min = 1, max = 250)
-    @NotNull
     
-    @Column(name = "cause", nullable = false, unique = false)
+    //@Basic(optional = false)   
+    //@Size(min = 1, max = 250)
+    //@NotNull
+    @Column(name = "CAUSE", nullable = false, unique = false)
     private String cause;
-    @Column(name = "solution", nullable = false, unique = false)
+    @Column(name = "SOLUTION", nullable = false, unique = false)
     private String solution;
-    @Column(name = "workaround", nullable = true, unique = false)
+    @Column(name = "WORKAROUND", nullable = true, unique = false)
     private String workaround;
-    @Column(name = "category", nullable = false, unique = false)
+    @Column(name = "CATEGORY", nullable = false, unique = false)
     private String category;
-    
-    //Constructores
+
     public KnowError() {
+    }
+
+    public KnowError(Long id) {
+        this.id = id;
     }
 
     public KnowError(Long id, String cause, String solution, String workaround, String category) {
         this.id = id;
-        this.cause = cause;
+        this.cause = category;
         this.solution = solution;
         this.workaround = workaround;
         this.category = category;
@@ -101,7 +108,7 @@ public class KnowError implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

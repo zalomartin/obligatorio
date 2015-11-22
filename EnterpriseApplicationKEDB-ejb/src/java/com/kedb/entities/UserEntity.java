@@ -10,10 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author gonzalo.martin
- */
+
 @Entity
 @Table(name = "USERS")
 @XmlRootElement
@@ -67,7 +64,7 @@ public class UserEntity implements Serializable {
         return hash;
     }
     
-        @Override
+    @Override
     public boolean equals(Object obj) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(obj instanceof UserEntity)) {
@@ -84,7 +81,4 @@ public class UserEntity implements Serializable {
     public String toString() {
         return "com.kedb.entities.UserEntity[ id=" + id + " ]";
     }
-    
-    
-    
 }

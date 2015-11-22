@@ -34,11 +34,11 @@ private UserDaoBeanService userDao;
 
     @Override
     public void createUser(String userName, RoleEntity role) {
-     //   UserEntity user = new UserEntity();
-     //   user.setUserName(userName);
-     //   user.setRole(role);
-     //   userDao.createUser(user);
-         try {
+        UserEntity user = new UserEntity();
+        user.setUserName(userName);
+        user.setRole(role);
+        userDao.createUser(user);
+      /*  try {
         HttpSolrClient solr = new HttpSolrClient("http://localhost:8983/solr/kedb");                    
         SolrInputDocument document = new SolrInputDocument();
         document.addField("name", userName);  
@@ -53,7 +53,7 @@ private UserDaoBeanService userDao;
         Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
         Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        }*/
     }
 
     @Override
