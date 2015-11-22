@@ -7,6 +7,9 @@ package com.kedb.persistence;
 
 import com.kedb.entities.RoleEntity;
 import com.kedb.entities.UserEntity;
+import com.kedb.logger.MessageLoggerLocal;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,23 +23,33 @@ public class UserDaoBean implements UserDaoBeanService {
     @PersistenceContext
     EntityManager em;
 
+    @EJB
+    private MessageLoggerLocal logger;
+    
     @Override
     public void createUser(UserEntity user) {
-        UserEntity userEntity = null;
-        //TODO:Falta validar que el usuario no exista
-        userEntity = new UserEntity();
-        UserEntity userNew = (UserEntity)user;
-        userEntity.setUserName(userNew.getUserName());
-        userEntity.setRole(userNew.getRole());
-        em.persist(userEntity);
+        em.persist(user);
+        logger.logInfo("Se agregó el usuario "+user.getUserName()+" con rol ");
+        
     }
     
     @Override
     public void deleteUser(UserEntity user) {
+        
+        logger.logInfo("Se eliminó el usuario "+user.getUserName());
     }
 
     @Override
     public void modifyUser(UserEntity user) {
+        
+        logger.logInfo("Se modificó el usuario "+user.getUserName());        
     }
+
+    @Override
+    public UserEntity getUser(String id) {
+        //select
+        return null;
+    }
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package com.kedb.buisiness;
 
+import com.kedb.entities.RoleEntity;
 import com.kedb.persistence.RoleDaoService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -33,5 +34,14 @@ private RoleDaoService roleDao;
     public void modifyRole(long id, String description) {
         roleDao.modifyRole(id, description);
     }
+
+    @Override
+    public RoleEntity getRole(String description) {
+        System.out.println("Llego al getRole del RoleBean");
+        RoleEntity roleAux = roleDao.getRole(description);
+        return roleAux;
+    }
+    
+    
     
 }

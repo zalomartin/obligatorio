@@ -5,6 +5,7 @@
  */
 package com.kedb.persistence;
 
+import com.kedb.entities.RoleEntity;
 import javax.ejb.Local;
 
 /**
@@ -17,5 +18,7 @@ public interface RoleDaoService {
     void createRole(String description);
     void modifyRole(long id, String description);
     void deleteRole(long id);
+
+    RoleEntity getRole(String description);
     
 }

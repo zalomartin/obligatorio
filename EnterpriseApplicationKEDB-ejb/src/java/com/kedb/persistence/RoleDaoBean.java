@@ -5,7 +5,10 @@
  */
 package com.kedb.persistence;
 
+import com.kedb.entities.RoleEntity;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,6 +17,9 @@ import javax.ejb.Stateless;
 @Stateless
 public class RoleDaoBean implements RoleDaoService {
 
+    @PersistenceContext
+    EntityManager em;
+    
     @Override
     public void createRole(String description) {
     }
@@ -25,5 +31,20 @@ public class RoleDaoBean implements RoleDaoService {
     @Override
     public void deleteRole(long id) {
     }
+
+    @Override
+    public RoleEntity getRole(String description) {
+        System.out.println("Llego al getRole de RoleDao");
+        RoleEntity roleAux = (RoleEntity)em.createQuery("select m from RoleEntity m where m.description=:description").setParameter("description", description).getSingleResult();
+                
+        System.out.println("Obtengo el role de la base");
+        if (roleAux==null){
+              System.out.println("No se encontro una usuario con ese identificador");
+              return null;
+         }
+        return roleAux;
+    }
+    
+    
     
 }

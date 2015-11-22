@@ -32,12 +32,15 @@ public class UserBean implements UserBeanService {
 @EJB
 private UserDaoBeanService userDao;
 
+@EJB
+private RoleBeanService roleBean;
+
     @Override
     public void createUser(String userName, RoleEntity role) {
-        UserEntity user = new UserEntity();
-        user.setUserName(userName);
-        user.setRole(role);
-        userDao.createUser(user);
+        UserEntity userAux = new UserEntity();
+        userAux.setUserName(userName);
+        userAux.setRole(role);
+        userDao.createUser(userAux);
       /*  try {
         HttpSolrClient solr = new HttpSolrClient("http://localhost:8983/solr/kedb");                    
         SolrInputDocument document = new SolrInputDocument();
@@ -55,18 +58,38 @@ private UserDaoBeanService userDao;
         Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }
-
+    
     @Override
-    public void deleteUser(long id) {
+    public void createUser(String userName, String userRole) {
+        System.out.println("createUser recibiendo dos Strings");
+        if(roleBean.getRole(userRole) != null){
+            
+            UserEntity userAux = new UserEntity();
+            userAux.setUserName(userName);
+            userAux.setRole(roleBean.getRole(userRole));
+            userDao.createUser(userAux);
+        }else{
+            
+        }
+        
+        
+        
+        
     }
 
     @Override
-    public void modifyUser(long id, String userName, RoleEntity role) {
+    public void deleteUser(String userName) {
     }
 
     @Override
-    public void findUser(long id) {
+    public void modifyUser(String userName, UserEntity newUser) {
     }
+
+    @Override
+    public void findUser(String userName) {
+    }
+
+    
     
     
 
