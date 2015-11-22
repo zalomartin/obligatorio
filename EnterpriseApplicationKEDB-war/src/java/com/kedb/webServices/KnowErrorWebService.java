@@ -15,26 +15,51 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 //@WebService(serviceName = "KnowErrorWebService")
 @RequestScoped
 @Path("/knowError")
 public class KnowErrorWebService {
 
-@EJB
-private KnowErrorService bLocal;
+    @EJB
+    private KnowErrorService bLocal;
 
-   @POST
-   @Path("/createKE")
-   @Consumes("application/x-www-form-urlencoded") 
-   public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category) {
-      if (bLocal==null) return "error";
-       System.out.println("-----------cause"+ cause);
-       bLocal.createKnowError(cause, solution, workaround, category);
-       return "OK";
+//Crea un nuevos KnowErrors
+    @POST
+    @Path("/createKE")
+    @Consumes("application/x-www-form-urlencoded")
+    public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category) {
+        if (bLocal == null) {
+            return "error";
+        }
+        System.out.println("-----------cause" + cause);
+        bLocal.createKnowError(cause, solution, workaround, category);
+        return "OK";
     }
-   
+
+//Devuelve todos los KnowErrors
+//TODO: Falta terminar
+    @GET
+    @Path("/findAllKE")
+    @Produces("application/json")
+    public String findKnowError(String criteria) {
+        String ret = "";
+        ret = bLocal.findKnowError(criteria);
+        return ret;
+    }
+
+//Devuelve los KnowErrors filtrados por la categoría que se ingreso de la BD Solr
+    @GET
+    @Path("/findKECategory")
+    @Produces("application/json")
+    public String findKnowErrorCategory(@QueryParam("category") String category) {
+        String ret = "";
+        ret = bLocal.findKnowError(category);
+        return ret;
+    }
 }
