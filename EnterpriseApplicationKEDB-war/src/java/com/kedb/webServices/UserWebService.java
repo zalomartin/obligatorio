@@ -5,11 +5,8 @@
  */
 package com.kedb.webServices;
 
-import com.kedb.buisiness.UserBean;
 import com.kedb.buisiness.UserBeanService;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.faces.bean.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,11 +20,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-
-/**
- *
- * @author gonzalo.martin
- */
 //@Stateless
 //@LocalBean
 @RequestScoped
