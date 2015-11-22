@@ -35,7 +35,6 @@ private KnowErrorDao knowErrorDao;
 
     @Override
     public void createKnowError(String cause, String solution, String workaround, String category) {
-        System.out.println("llego");
         try {   
             KnowError knowErrorEntity = new KnowError();
             knowErrorEntity.setCause(cause);
@@ -49,25 +48,26 @@ private KnowErrorDao knowErrorDao;
     }    
 
     @Override
-    public void findKnowError() {  
-        try { 
-        HttpSolrClient client = new HttpSolrClient("http://localhost:8983/solr/kedb");
-        client.setUseMultiPartPost(true);
-        client.setConnectionTimeout(5000);
-        SolrQuery solrQuery = new SolrQuery();
-        solrQuery.setQuery("change.me");
-        solrQuery.setFields("id");
-        solrQuery.setStart(0);
-        solrQuery.setRows(10);
-        QueryResponse response = client.query(solrQuery);
-        SolrDocumentList results = response.getResults();
-        for (int i = 0; i < results.size(); ++i) {
-            System.out.println(results.get(i));
-        }
+    public String findKnowError(String category) {  
+        String ret = "";
+        try {
+            ret = knowErrorDao.findKnowErrorSolr(category);
         } catch (Exception ex) {
             Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
         }
+        return ret;
     }   
+
+    @Override
+    public String findKnowErrorMySql() {
+        String ret = "";
+        try {
+            ret = knowErrorDao.findKnowErrorMySql(ret);
+        } catch (Exception ex) {
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+        }
+        return ret;
+    }
  }
 
 

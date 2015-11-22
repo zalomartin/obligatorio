@@ -15,5 +15,6 @@ import javax.ejb.Local;
 public interface KnowErrorService {
     
     void createKnowError(String cause, String solution, String workaround, String category);
-    void findKnowError();
+    String findKnowError(String category);
+    String findKnowErrorMySql();
 }
