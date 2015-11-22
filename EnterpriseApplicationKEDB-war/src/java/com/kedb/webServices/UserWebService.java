@@ -39,10 +39,11 @@ public class UserWebService {
     @POST 
     @Path("/createUser")
     @Consumes("application/x-www-form-urlencoded")
-    public String createUser(@FormParam("userName") String userName) {
+    public String createUser(@FormParam("userName") String userName, @FormParam("userRole") String userRole) {
         if (bLocal==null) return "error";
-        System.out.println("-----------name"+ userName);
-        bLocal.createUser(userName, null);
+        System.out.println("-----------Name "+ userName);
+        System.out.println("-----------Role "+ userRole);
+        bLocal.createUser(userName, userRole);
         return "OK";
     }
     
@@ -52,7 +53,8 @@ public class UserWebService {
     public String modifyUser(@FormParam("userName") String userName) {
         if (bLocal==null) return "error";
         System.out.println("-----------name"+ userName);
-        bLocal.createUser(userName, null);
+       // bLocal.createUser(userName, userRole);
+        //bLocal.modifyUser(id, userName, null);
         return "OK";
     }
     
@@ -62,7 +64,8 @@ public class UserWebService {
     public String deleteUser(@FormParam("userName") String userName) {
         if (bLocal==null) return "error";
         System.out.println("-----------name"+ userName);
-        bLocal.createUser(userName, null);
+        //bLocal.createUser(userName, null);
+        //bLocal.deleteUser(id);
         return "OK";
     }
 }
