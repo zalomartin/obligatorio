@@ -28,34 +28,15 @@ public class KnowErrorDaoBean implements KnowErrorDao {
   
     @Override
     public void createKnowError(KnowError knowError) {
-        KnowError knowErrorEntity = null;
-        knowErrorEntity = new KnowError();
-        KnowError knowErrorNew = (KnowError)knowError;
-        knowErrorEntity.setCause(knowErrorNew.getCause());
-        knowErrorEntity.setSolution(knowErrorNew.getSolution());
-        knowErrorEntity.setWorkaround(knowErrorNew.getWorkaround());
-        knowErrorEntity.setCategory(knowErrorNew.getSolution());
-        em.persist(knowErrorEntity);
+        em.persist(knowError);
     //TODO: validaciones,logica de bd, try generico + try para cada uno de los métodos
-        //Insertamos en MySq
-     /*   try {
-        KnowError k = new KnowError();
-        k.setCause(cause);
-        k.setSolution(solution);
-        k.setWorkaround(workaround);
-        k.setCategory(category);
-        em.persist(k);
-        } catch (Exception ex){
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        //Insertamos en Solr
         try {
         HttpSolrClient solr = new HttpSolrClient("http://localhost:8983/solr/kedb");                    
         SolrInputDocument document = new SolrInputDocument();
-        document.addField("cause", knowErrorNew.getCause());
-        document.addField("solution", knowErrorNew.getSolution());
-        document.addField("workaround", knowErrorNew.getWorkaround());
-        document.addField("category", knowErrorNew.getCategory()); 
+        document.addField("cause", knowError.getCause());
+        document.addField("solution", knowError.getSolution());
+        document.addField("workaround", knowError.getWorkaround());
+        document.addField("category", knowError.getCategory()); 
         UpdateRequest req = new UpdateRequest();
         req.setAction( UpdateRequest.ACTION.COMMIT, false, false );
         req.add(document);
