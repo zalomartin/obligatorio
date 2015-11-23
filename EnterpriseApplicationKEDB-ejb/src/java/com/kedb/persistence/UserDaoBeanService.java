@@ -20,7 +20,7 @@ public interface UserDaoBeanService {
     void deleteUser(UserEntity user);
     void modifyUser(UserEntity user);
     void createUser(UserEntity user);
-
     UserEntity getUser(String id);
+    public List<UserEntity> getAllUsers();
     
 }

@@ -14,10 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author gonzalo.martin
- */
+
 @Stateless
 public class UserDaoBean implements UserDaoBeanService {
     @PersistenceContext
@@ -50,6 +47,10 @@ public class UserDaoBean implements UserDaoBeanService {
         //select
         return null;
     }
-    
-    
+  
+    @Override
+    public List<UserEntity> getAllUsers() {
+        List<UserEntity> users = em.createNamedQuery("UserEntity.getAllUsers", UserEntity.class).getResultList();
+        return users;
+    }
 }

@@ -9,6 +9,7 @@ import com.kedb.entities.RoleEntity;
 import com.kedb.entities.UserEntity;
 import com.kedb.exceptions.ApplicationKEDBException;
 import com.kedb.persistence.UserDaoBeanService;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -55,6 +56,12 @@ private RoleBeanService roleBean;
 
     @Override
     public void findUser(String userName) {
+        
+    }
+    
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return userDao.getAllUsers();
     }
 
     
