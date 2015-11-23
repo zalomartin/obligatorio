@@ -6,6 +6,7 @@
 package com.kedb.webServices;
 
 import com.kedb.buisiness.KnowErrorService;
+import com.sun.faces.action.RequestMapping;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
@@ -42,7 +43,7 @@ public class KnowErrorWebService {
         return "OK";
     }
 
-    //Retorna todos los KnowErrors
+    //Retorna todos los KnowErrors de la BD Solr
     @GET
     @Path("/getAllKE")
     @Produces("application/json")
@@ -52,6 +53,16 @@ public class KnowErrorWebService {
         return ret;
     }
 
+    //Retorna todos los KnowErrors de la BD MySql
+    @GET
+    @Path("/getAllKEMySql")
+    @Produces("application/json")
+    public String getAllKEMySql() {
+        String ret = "";
+        ret = bLocal.getKnowErrorMySql();
+        return ret;
+    }
+    
     //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD Solr
     @GET
     @Path("/getKECategory")
@@ -61,13 +72,23 @@ public class KnowErrorWebService {
         ret = bLocal.getKnowError(category);
         return ret;
     }
+
+    //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD MySql
+    @GET
+    @Path("/getKECategoryMySql")
+    @Produces("application/json")
+    public String getKnowErrorCategoryMySql(@QueryParam("category") String category) {
+        String ret = "";
+        ret = bLocal.getKnowErrorMySql(category);
+        return ret;
+    }
     
     //Retorna los KnowErrors filtrados por la palabra clave ingresada
     //TODO:No funciona
     @GET
     @Path("/getKEKeyword")
     @Produces("application/json")
-    public String getKnowErrorKeyword(String keyword) {
+    public String getKnowErrorKeyword(@QueryParam("keyword") String keyword) {
         String ret = "";
         ret = bLocal.getKnowErrorKeyword(keyword);
         return ret;
