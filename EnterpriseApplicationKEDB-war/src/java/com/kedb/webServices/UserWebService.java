@@ -31,6 +31,7 @@ public class UserWebService {
     @EJB
     private UserBeanService bLocal;
       
+    //Retorna la lista de usuarios
     @GET
     @Path("/listAllUsers")
     @Produces("application/json")

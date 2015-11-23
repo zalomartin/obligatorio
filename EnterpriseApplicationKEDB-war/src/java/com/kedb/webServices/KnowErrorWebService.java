@@ -21,7 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-//@WebService(serviceName = "KnowErrorWebService")
+
 @RequestScoped
 @Path("/knowError")
 public class KnowErrorWebService {
@@ -29,7 +29,7 @@ public class KnowErrorWebService {
     @EJB
     private KnowErrorService bLocal;
 
-//Crea un nuevos KnowErrors
+    //Crea un nuevo KnowError
     @POST
     @Path("/createKE")
     @Consumes("application/x-www-form-urlencoded")
@@ -42,24 +42,34 @@ public class KnowErrorWebService {
         return "OK";
     }
 
-//Devuelve todos los KnowErrors
-//TODO: Falta terminar
+    //Retorna todos los KnowErrors
     @GET
-    @Path("/findAllKE")
+    @Path("/getAllKE")
     @Produces("application/json")
-    public String findKnowError(String criteria) {
+    public String getAllKE() {
         String ret = "";
-        ret = bLocal.findKnowError(criteria);
+        ret = bLocal.getKnowError();
         return ret;
     }
 
-//Devuelve los KnowErrors filtrados por la categoría que se ingreso de la BD Solr
+    //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD Solr
     @GET
-    @Path("/findKECategory")
+    @Path("/getKECategory")
     @Produces("application/json")
-    public String findKnowErrorCategory(@QueryParam("category") String category) {
+    public String getKnowErrorCategory(@QueryParam("category") String category) {
         String ret = "";
-        ret = bLocal.findKnowError(category);
+        ret = bLocal.getKnowError(category);
+        return ret;
+    }
+    
+    //Retorna los KnowErrors filtrados por la palabra clave ingresada
+    //TODO:No funciona
+    @GET
+    @Path("/getKEKeyword")
+    @Produces("application/json")
+    public String getKnowErrorKeyword(String keyword) {
+        String ret = "";
+        ret = bLocal.getKnowErrorKeyword(keyword);
         return ret;
     }
 }
