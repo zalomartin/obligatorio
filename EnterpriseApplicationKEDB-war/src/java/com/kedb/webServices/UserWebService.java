@@ -7,7 +7,9 @@ package com.kedb.webServices;
 
 import com.kedb.buisiness.UserBeanService;
 import com.kedb.dtos.ResponseWebService;
+import com.kedb.entities.UserEntity;
 import com.kedb.exceptions.ApplicationKEDBException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -18,6 +20,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import com.google.gson.Gson;
 
 //@Stateless
 //@LocalBean
@@ -29,10 +32,15 @@ public class UserWebService {
     private UserBeanService bLocal;
       
     @GET
-    @Path("listUsers")
+    @Path("/listAllUsers")
     @Produces("application/json")
-    public void getUsers() {
-        System.out.println("OK");
+    public String getAllUsers() {
+        Gson gson = new Gson();
+        String ret = "";
+        List<UserEntity> result = bLocal.getAllUsers();
+        ret = gson.toJson(result);
+        //System.out.println("OK");
+        return ret;
     }
     
     @POST 
