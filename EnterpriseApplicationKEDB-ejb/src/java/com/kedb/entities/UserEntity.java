@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedQueries({
     @NamedQuery(name = "UserEntity.getAllUsers", query = "SELECT u from UserEntity u ")}
+        
 )
 @Entity
 @Table(name = "USERS")

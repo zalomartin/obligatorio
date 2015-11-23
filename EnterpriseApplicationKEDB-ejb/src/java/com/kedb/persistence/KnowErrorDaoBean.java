@@ -51,7 +51,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
     }
 
     @Override
-    public String findKnowErrorSolr(String category) {
+    public String getKnowErrorSolr(String category) {
         String ret = "";
         String cat = category;
         try { 
@@ -60,9 +60,51 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         client.setConnectionTimeout(5000);
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setQuery(cat);
+        //solrQuery.setFields("category");
+        solrQuery.setStart(0);
+        solrQuery.setRows(200);
+        QueryResponse response = client.query(solrQuery);
+        SolrDocumentList results = response.getResults();
+        ret = JSONUtil.toJSON(results); //this has the json documents
+        } catch (Exception ex) {
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+        }
+        return ret;
+    }
+    
+    @Override
+    public String getKnowErrorKeywordSolr(String keyword) {
+        String ret = "";
+        String key = keyword;
+        try { 
+        HttpSolrClient client = new HttpSolrClient("http://localhost:8983/solr/kedb");
+        client.setUseMultiPartPost(true);
+        client.setConnectionTimeout(5000);
+        SolrQuery solrQuery = new SolrQuery();
+        solrQuery.setQuery(key);
+        solrQuery.setStart(0);
+        solrQuery.setRows(200);
+        QueryResponse response = client.query(solrQuery);
+        SolrDocumentList results = response.getResults();
+        ret = JSONUtil.toJSON(results); //this has the json documents
+        } catch (Exception ex) {
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+        }
+        return ret;
+    }
+    
+    @Override
+    public String getKnowErrorSolr() {
+        String ret = "";
+        try { 
+        HttpSolrClient client = new HttpSolrClient("http://localhost:8983/solr/kedb");
+        client.setUseMultiPartPost(true);
+        client.setConnectionTimeout(5000);
+        SolrQuery solrQuery = new SolrQuery();
+        solrQuery.setQuery("*:*");
      //   solrQuery.setFields("");
         solrQuery.setStart(0);
-        solrQuery.setRows(20);
+        solrQuery.setRows(25000);
         QueryResponse response = client.query(solrQuery);
         SolrDocumentList results = response.getResults();
         ret = JSONUtil.toJSON(results); //this has the json documents
@@ -73,7 +115,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
     }
 
     @Override
-    public String findKnowErrorMySql(String category) {
+    public String getKnowErrorMySql(String category) {
         return null;
     }
 }

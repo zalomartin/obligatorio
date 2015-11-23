@@ -48,21 +48,44 @@ private KnowErrorDao knowErrorDao;
     }    
 
     @Override
-    public String findKnowError(String category) {  
+    public String getKnowError(String category) {  
         String ret = "";
         try {
-            ret = knowErrorDao.findKnowErrorSolr(category);
+            ret = knowErrorDao.getKnowErrorSolr(category);
         } catch (Exception ex) {
             Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
         }
         return ret;
-    }   
-
+    }
+    
     @Override
-    public String findKnowErrorMySql() {
+    public String getKnowErrorKeyword(String keyword) {  
         String ret = "";
         try {
-            ret = knowErrorDao.findKnowErrorMySql(ret);
+            ret = knowErrorDao.getKnowErrorKeywordSolr(keyword);
+        } catch (Exception ex) {
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+        }
+        return ret;
+    }
+    
+    //Retorno todos los Know Errors
+    @Override
+    public String getKnowError() {  
+        String ret = "";
+        try {
+            ret = knowErrorDao.getKnowErrorSolr();
+        } catch (Exception ex) {
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+        }
+        return ret;
+    }  
+
+    @Override
+    public String getKnowErrorMySql() {
+        String ret = "";
+        try {
+            ret = knowErrorDao.getKnowErrorMySql(ret);
         } catch (Exception ex) {
             Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
         }

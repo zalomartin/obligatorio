@@ -13,6 +13,8 @@ import javax.ejb.Local;
 @Local
 public interface KnowErrorDao {
     void createKnowError(KnowError knowError);
-    String findKnowErrorSolr(String category);
-    String findKnowErrorMySql(String category);
+    String getKnowErrorSolr(String category);
+    String getKnowErrorSolr();
+    String getKnowErrorKeywordSolr(String keyword);
+    String getKnowErrorMySql(String category);
 }
