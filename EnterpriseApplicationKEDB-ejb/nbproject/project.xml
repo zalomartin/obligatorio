@@ -6,6 +6,7 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>EnterpriseApplicationKEDB-ejb</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
+            <explicit-platform explicit-source-supported="true"/>
             <included-library dirs="100">reference.EnterpriseApplicationKEDB-Logger.dist</included-library>
             <included-library dirs="200">file.reference.commons-codec-1.9.jar</included-library>
             <included-library dirs="200">file.reference.commons-logging.jar</included-library>

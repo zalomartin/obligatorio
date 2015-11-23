@@ -6,6 +6,7 @@
 package com.kedb.persistence;
 
 import com.kedb.entities.RoleEntity;
+import com.kedb.exceptions.ApplicationKEDBException;
 import javax.ejb.Local;
 
 /**
@@ -19,6 +20,6 @@ public interface RoleDaoService {
     void modifyRole(long id, String description);
     void deleteRole(long id);
 
-    RoleEntity getRole(String description);
+    RoleEntity getRole(String description)throws ApplicationKEDBException;
     
 }

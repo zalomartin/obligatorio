@@ -6,8 +6,12 @@
 package com.kedb.persistence;
 
 import com.kedb.entities.RoleEntity;
+import com.kedb.exceptions.ApplicationKEDBException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -32,19 +36,23 @@ public class RoleDaoBean implements RoleDaoService {
     public void deleteRole(long id) {
     }
 
+    /**
+     *
+     * @param description
+     * @return
+     * @throws ApplicationKEDBException
+     */
     @Override
-    public RoleEntity getRole(String description) {
-        System.out.println("Llego al getRole de RoleDao");
-        RoleEntity roleAux = (RoleEntity)em.createQuery("select m from RoleEntity m where m.description=:description").setParameter("description", description).getSingleResult();
-                
-        System.out.println("Obtengo el role de la base");
-        if (roleAux==null){
-              System.out.println("No se encontro una usuario con ese identificador");
-              return null;
-         }
+    public RoleEntity getRole(String description) throws ApplicationKEDBException{
+        RoleEntity roleAux = null;
+        try {
+             roleAux = em.createNamedQuery("RoleEntity.findRolName",RoleEntity.class)
+                    .setParameter("description", description)
+                    .getSingleResult();    
+        }catch(NoResultException e){
+           Logger.getLogger(RoleDaoBean.class.getName()).log(Level.SEVERE, null, e);
+           throw new ApplicationKEDBException("El rol no existe");
+        }      
         return roleAux;
     }
-    
-    
-    
 }

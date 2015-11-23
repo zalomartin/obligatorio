@@ -6,6 +6,7 @@
 package com.kedb.buisiness;
 
 import com.kedb.entities.RoleEntity;
+import com.kedb.exceptions.ApplicationKEDBException;
 import com.kedb.persistence.RoleDaoService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -36,7 +37,7 @@ private RoleDaoService roleDao;
     }
 
     @Override
-    public RoleEntity getRole(String description) {
+    public RoleEntity getRole(String description) throws ApplicationKEDBException {
         System.out.println("Llego al getRole del RoleBean");
         RoleEntity roleAux = roleDao.getRole(description);
         return roleAux;

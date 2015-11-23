@@ -6,6 +6,7 @@
 package com.kedb.buisiness;
 
 import com.kedb.entities.RoleEntity;
+import com.kedb.exceptions.ApplicationKEDBException;
 import javax.ejb.Local;
 
 /**
@@ -19,7 +20,7 @@ public interface RoleBeanService {
     void deleteRole(long id);
     void modifyRole(long id, String description);
 
-    RoleEntity getRole(String description);
+    RoleEntity getRole(String description) throws ApplicationKEDBException;
 
     
 }
