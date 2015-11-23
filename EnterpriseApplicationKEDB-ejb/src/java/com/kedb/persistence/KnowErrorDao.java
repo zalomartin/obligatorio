@@ -17,4 +17,5 @@ public interface KnowErrorDao {
     String getKnowErrorSolr();
     String getKnowErrorKeywordSolr(String keyword);
     String getKnowErrorMySql(String category);
+    String getKnowErrorMySql();
 }

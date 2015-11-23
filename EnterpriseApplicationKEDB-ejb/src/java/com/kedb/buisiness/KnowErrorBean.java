@@ -82,8 +82,9 @@ private KnowErrorDao knowErrorDao;
     }  
 
     @Override
-    public String getKnowErrorMySql() {
+    public String getKnowErrorMySql(String category) {
         String ret = "";
+        ret = category;
         try {
             ret = knowErrorDao.getKnowErrorMySql(ret);
         } catch (Exception ex) {
@@ -91,6 +92,17 @@ private KnowErrorDao knowErrorDao;
         }
         return ret;
     }
- }
+
+    @Override
+    public String getKnowErrorMySql() {
+        String ret = "";
+        try {
+            ret = knowErrorDao.getKnowErrorMySql();
+        } catch (Exception ex) {
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+        }
+        return ret;
+    }
+}
 
 

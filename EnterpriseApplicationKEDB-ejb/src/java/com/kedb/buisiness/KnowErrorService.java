@@ -18,5 +18,6 @@ public interface KnowErrorService {
     String getKnowError(String category);
     String getKnowErrorKeyword(String keyword);
     String getKnowError();
+    String getKnowErrorMySql(String category);
     String getKnowErrorMySql();
 }

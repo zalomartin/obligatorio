@@ -19,6 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "KNOW_ERROR")
 @XmlRootElement
 
+@NamedQueries({
+    @NamedQuery(name = "KnowError.getKECategory", query = "SELECT k from KnowError k WHERE upper(k.category)=upper(:category)"),
+    @NamedQuery(name = "KnowError.getAllKE", query = "SELECT k from KnowError k")}
+        
+)
 /*@NamedQueries({
     @NamedQuery(name = "KnowError.findAll", query = "SELECT k FROM KnowError k"),
     @NamedQuery(name = "KnowError.findById", query = "SELECT k FROM KnowError k WHERE k.id = :id"),

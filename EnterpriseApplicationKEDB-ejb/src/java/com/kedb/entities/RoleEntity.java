@@ -11,10 +11,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author gonzalo.martin
- */
+
 @NamedQueries({
     @NamedQuery(name = "RoleEntity.findRolName", query = "SELECT e from RoleEntity e WHERE upper(e.description)=upper(:description)")}
 )

@@ -5,8 +5,10 @@
  */
 package com.kedb.persistence;
 
+import com.google.gson.Gson;
 import com.kedb.buisiness.KnowErrorBean;
 import com.kedb.entities.KnowError;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -116,6 +118,21 @@ public class KnowErrorDaoBean implements KnowErrorDao {
 
     @Override
     public String getKnowErrorMySql(String category) {
-        return null;
+        List<KnowError> knowErrorAux = null;
+        String ret = "";
+        knowErrorAux = em.createNamedQuery("KnowError.getKECategory",KnowError.class).setParameter("category", category).getResultList();
+        Gson gson = new Gson();
+        ret = gson.toJson(knowErrorAux);
+        return ret;
+    }
+    
+    @Override
+    public String getKnowErrorMySql(){
+        List<KnowError> knowErrorAux = null;
+        String ret = "";
+        knowErrorAux = em.createNamedQuery("KnowError.getAllKE", KnowError.class).getResultList();
+        Gson gson = new Gson();
+        ret = gson.toJson(knowErrorAux);
+        return ret;
     }
 }
