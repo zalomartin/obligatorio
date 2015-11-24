@@ -33,6 +33,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         try {
         HttpSolrClient solr = new HttpSolrClient("http://localhost:8983/solr/kedb");                    
         SolrInputDocument document = new SolrInputDocument();
+        document.addField("id", knowError.getId());
         document.addField("cause", knowError.getCause());
         document.addField("solution", knowError.getSolution());
         document.addField("workaround", knowError.getWorkaround());
@@ -58,7 +59,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         client.setConnectionTimeout(5000);
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setQuery(cat);
-        //solrQuery.setFields("category");
+        solrQuery.setFields("ID","CATEGORY","CAUSE","SOLUTION","WORKAROUND");
         solrQuery.setStart(0);
         solrQuery.setRows(200);
         QueryResponse response = client.query(solrQuery);
@@ -80,6 +81,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         client.setConnectionTimeout(5000);
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setQuery(key);
+        solrQuery.setFields("ID","CATEGORY","CAUSE","SOLUTION","WORKAROUND");
         solrQuery.setStart(0);
         solrQuery.setRows(200);
         QueryResponse response = client.query(solrQuery);
@@ -100,9 +102,9 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         client.setConnectionTimeout(5000);
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setQuery("*:*");
-     //   solrQuery.setFields("");
+        solrQuery.setFields("ID","CATEGORY","CAUSE","SOLUTION","WORKAROUND");
         solrQuery.setStart(0);
-        solrQuery.setRows(25000);
+        solrQuery.setRows(500);
         QueryResponse response = client.query(solrQuery);
         SolrDocumentList results = response.getResults();
         ret = JSONUtil.toJSON(results); //this has the json documents
