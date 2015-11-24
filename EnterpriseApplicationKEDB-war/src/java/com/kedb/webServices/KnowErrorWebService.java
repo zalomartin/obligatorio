@@ -2,14 +2,14 @@
 package com.kedb.webServices;
 
 import com.kedb.buisiness.KnowErrorService;
-import com.sun.faces.action.RequestMapping;
+//import com.sun.faces.action.RequestMapping;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
-import javax.ejb.Stateless;
+//import javax.ejb.Stateful;
+//import javax.ejb.Stateless;
 import javax.faces.bean.RequestScoped;
-import javax.jws.WebService;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
+//import javax.jws.WebService;
+//import javax.jws.WebMethod;
+//import javax.jws.WebParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -37,24 +37,17 @@ public class KnowErrorWebService {
         bLocal.createKnowError(cause, solution, workaround, category);
         return "OK";
     }
-
-    //Retorna todos los KnowErrors de la BD Solr
+    
+    //*******************************
+    //RETORNO DE KNOW ERRORS EN SOLR
+    //*******************************
+    
     @GET
     @Path("/getAllKE")
     @Produces("application/json")
     public String getAllKE() {
         String ret = "";
         ret = bLocal.getKnowError();
-        return ret;
-    }
-
-    //Retorna todos los KnowErrors de la BD MySql
-    @GET
-    @Path("/getAllKEMySql")
-    @Produces("application/json")
-    public String getAllKEMySql() {
-        String ret = "";
-        ret = bLocal.getKnowErrorMySql();
         return ret;
     }
     
@@ -67,16 +60,6 @@ public class KnowErrorWebService {
         ret = bLocal.getKnowError(category);
         return ret;
     }
-
-    //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD MySql
-    @GET
-    @Path("/getKECategoryMySql")
-    @Produces("application/json")
-    public String getKnowErrorCategoryMySql(@QueryParam("category") String category) {
-        String ret = "";
-        ret = bLocal.getKnowErrorMySql(category);
-        return ret;
-    }
     
     //Retorna los KnowErrors filtrados por la palabra clave ingresada
     @GET
@@ -87,6 +70,19 @@ public class KnowErrorWebService {
         ret = bLocal.getKnowErrorKeyword(keyword);
         return ret;
     }
+
+    //*******************************
+    //RETORNO DE KNOW ERRORS EN MYSQL
+    //*******************************
+    
+    @GET
+    @Path("/getAllKEMySql")
+    @Produces("application/json")
+    public String getAllKEMySql() {
+        String ret = "";
+        ret = bLocal.getKnowErrorMySql();
+        return ret;
+    }
     
     //Retorna los KnowErrors filtrados por la palabra clave ingresada en la BD MySql
     @GET
@@ -95,6 +91,16 @@ public class KnowErrorWebService {
     public String getKnowErrorKeywordMySql(@QueryParam("keyword") String keyword) {
         String ret = "";
         ret = bLocal.getKnowErrorKeywordMySql(keyword);
+        return ret;
+    }
+    
+    //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD MySql
+    @GET
+    @Path("/getKECategoryMySql")
+    @Produces("application/json")
+    public String getKnowErrorCategoryMySql(@QueryParam("category") String category) {
+        String ret = "";
+        ret = bLocal.getKnowErrorMySql(category);
         return ret;
     }
 }
