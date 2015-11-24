@@ -4,9 +4,11 @@ package com.kedb.persistence;
 import com.google.gson.Gson;
 import com.kedb.buisiness.KnowErrorBean;
 import com.kedb.entities.KnowError;
+import com.kedb.messageProducer.MessageProducerBeanLocal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,9 @@ public class KnowErrorDaoBean implements KnowErrorDao {
   @PersistenceContext
   EntityManager em;
   
+  @EJB
+  private MessageProducerBeanLocal mdb;
+  
     @Override
     public void createKnowError(KnowError knowError) {
         em.persist(knowError);
@@ -43,10 +48,11 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         req.add(document);
         UpdateResponse response = req.process(solr);
         System.out.println("RESPONSE " +response);
-        solr.commit();  
+        solr.commit();          
         } catch (Exception ex){
             Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mdb.theMessage("Se registro un nuevo KE");
     }
 
     @Override
