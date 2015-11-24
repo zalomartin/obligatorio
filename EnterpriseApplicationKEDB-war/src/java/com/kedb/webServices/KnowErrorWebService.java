@@ -2,14 +2,8 @@
 package com.kedb.webServices;
 
 import com.kedb.buisiness.KnowErrorService;
-//import com.sun.faces.action.RequestMapping;
 import javax.ejb.EJB;
-//import javax.ejb.Stateful;
-//import javax.ejb.Stateless;
 import javax.faces.bean.RequestScoped;
-//import javax.jws.WebService;
-//import javax.jws.WebMethod;
-//import javax.jws.WebParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -24,8 +18,8 @@ public class KnowErrorWebService {
 
     @EJB
     private KnowErrorService bLocal;
-
-    //Crea un nuevo KnowError
+    
+    //CREACIÓN DE UN NUEVO KNOW ERROR
     @POST
     @Path("/createKE")
     @Consumes("application/x-www-form-urlencoded")
@@ -42,6 +36,7 @@ public class KnowErrorWebService {
     //RETORNO DE KNOW ERRORS EN SOLR
     //*******************************
     
+    //RETORNA TODOS LOS KNOW ERRORS
     @GET
     @Path("/getAllKE")
     @Produces("application/json")
@@ -51,7 +46,7 @@ public class KnowErrorWebService {
         return ret;
     }
     
-    //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD Solr
+    //RETORNA KNOW ERRORS FILTRADOS POR UNA CATEGORIA
     @GET
     @Path("/getKECategory")
     @Produces("application/json")
