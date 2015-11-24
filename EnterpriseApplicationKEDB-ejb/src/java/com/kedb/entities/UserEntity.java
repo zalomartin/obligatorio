@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedQueries({
     @NamedQuery(name = "UserEntity.getAllUsers", query = "SELECT u from UserEntity u ")}
-        
 )
+
 @Entity
 @Table(name = "USERS")
 @XmlRootElement
@@ -32,7 +32,6 @@ public class UserEntity implements Serializable {
     @Column(name = "USER_NAME", nullable = false, unique = true)
     private String userName;
  
-    //TODO: Ver como hacerlo con el rol ya que es un atributo de otra clase
     @JoinColumn(name = "USER_ROLE", nullable = true, unique = false)
     private RoleEntity role;
 
@@ -77,10 +76,7 @@ public class UserEntity implements Serializable {
             return false;
         }
         UserEntity other = (UserEntity) obj;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
     
     @Override

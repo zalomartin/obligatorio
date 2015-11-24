@@ -1,30 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.kedb.buisiness;
 
 import com.kedb.entities.KnowError;
 import com.kedb.persistence.KnowErrorDao;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.request.AbstractUpdateRequest;
-import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
-import org.apache.solr.client.solrj.request.UpdateRequest;
-import org.apache.solr.client.solrj.response.QueryResponse;
-
-import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.SolrInputDocument;
 
 
 @Stateless
@@ -92,7 +74,19 @@ private KnowErrorDao knowErrorDao;
         }
         return ret;
     }
-
+    
+    @Override
+    public String getKnowErrorKeywordMySql(String keyword) {
+        String ret = "";
+        ret = keyword;
+        try {
+            ret = knowErrorDao.getKnowErrorKeywordMySql(keyword);
+        } catch (Exception ex) {
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+        }
+        return ret;
+    }
+    
     @Override
     public String getKnowErrorMySql() {
         String ret = "";

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.kedb.persistence;
 
 import com.google.gson.Gson;
@@ -121,6 +117,16 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         List<KnowError> knowErrorAux = null;
         String ret = "";
         knowErrorAux = em.createNamedQuery("KnowError.getKECategory",KnowError.class).setParameter("category", category).getResultList();
+        Gson gson = new Gson();
+        ret = gson.toJson(knowErrorAux);
+        return ret;
+    }
+    
+    @Override
+    public String getKnowErrorKeywordMySql(String keyword) {
+        List<KnowError> knowErrorAux = null;
+        String ret = "";
+        knowErrorAux = em.createNamedQuery("KnowError.getKEKeyword",KnowError.class).setParameter("cause", keyword).setParameter("category", keyword).setParameter("workaround", keyword).setParameter("solution", keyword).getResultList();
         Gson gson = new Gson();
         ret = gson.toJson(knowErrorAux);
         return ret;

@@ -1,7 +1,6 @@
 package com.kedb.entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -21,27 +18,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedQueries({
     @NamedQuery(name = "KnowError.getKECategory", query = "SELECT k from KnowError k WHERE upper(k.category)=upper(:category)"),
-    @NamedQuery(name = "KnowError.getAllKE", query = "SELECT k from KnowError k")}
-        
+    @NamedQuery(name = "KnowError.getAllKE", query = "SELECT k from KnowError k"),
+    @NamedQuery(name = "KnowError.getKEKeyword", query = "SELECT k from KnowError k WHERE "
+            + "(upper(k.cause) LIKE CONCAT ('%',upper (:cause),'%') OR (upper(k.category) LIKE CONCAT ('%',upper (:category),'%') OR "
+            + "(upper(k.solution) LIKE CONCAT ('%',upper (:solution),'%') OR (upper(k.workaround) LIKE CONCAT ('%',upper (:workaround),'%')))))")}
 )
-/*@NamedQueries({
-    @NamedQuery(name = "KnowError.findAll", query = "SELECT k FROM KnowError k"),
-    @NamedQuery(name = "KnowError.findById", query = "SELECT k FROM KnowError k WHERE k.id = :id"),
-    @NamedQuery(name = "KnowError.findByName", query = "SELECT k FROM KnowError k WHERE k.name = :name")})*/
 
 public class KnowError implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
-   // @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "KEDB_ID")
     private Long id;
-    
-    //@Basic(optional = false)   
-    //@Size(min = 1, max = 250)
-    //@NotNull
+   
     @Column(name = "CAUSE", nullable = false, unique = false)
     private String cause;
     @Column(name = "SOLUTION", nullable = false, unique = false)
@@ -66,7 +57,6 @@ public class KnowError implements Serializable {
         this.category = category;
     }
 
-    //Set y Get
     public String getCategory() {
         return category;
     }
@@ -121,10 +111,7 @@ public class KnowError implements Serializable {
             return false;
         }
         KnowError other = (KnowError) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

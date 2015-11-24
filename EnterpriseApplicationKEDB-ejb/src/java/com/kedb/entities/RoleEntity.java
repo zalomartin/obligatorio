@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RoleEntity.findRolName", query = "SELECT e from RoleEntity e WHERE upper(e.description)=upper(:description)")}
 )
+
 @Entity
 @Table(name = "ROLES")
 @XmlRootElement
@@ -26,7 +27,7 @@ public class RoleEntity implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ROLE_ID")
     private Long id;    
-    
+   
     @Column(name = "DESCRIPTION", nullable = false, unique = true)
     private String description;
 
@@ -62,19 +63,11 @@ public class RoleEntity implements Serializable{
             return false;
         }
         RoleEntity other = (RoleEntity) obj;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
         
     @Override
     public String toString() {
         return "com.kedb.entities.RoleEntity[ id=" + id + " ]";
-    }
-
-
-    
-    
-    
+    } 
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.kedb.persistence;
 
 import com.kedb.entities.RoleEntity;
@@ -14,10 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author gonzalo.martin
- */
+
 @Stateless
 public class RoleDaoBean implements RoleDaoService {
 
@@ -36,12 +29,6 @@ public class RoleDaoBean implements RoleDaoService {
     public void deleteRole(long id) {
     }
 
-    /**
-     *
-     * @param description
-     * @return
-     * @throws ApplicationKEDBException
-     */
     @Override
     public RoleEntity getRole(String description) throws ApplicationKEDBException{
         RoleEntity roleAux = null;
@@ -55,8 +42,7 @@ public class RoleDaoBean implements RoleDaoService {
         }catch(Exception e){
            Logger.getLogger(RoleDaoBean.class.getName()).log(Level.SEVERE, null, e);
           throw new ApplicationKEDBException("Error no manejadp");
-        }      
-        
+        }       
         return roleAux;
     }
 }

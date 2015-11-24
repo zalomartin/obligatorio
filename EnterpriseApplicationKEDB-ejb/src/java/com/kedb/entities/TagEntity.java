@@ -9,10 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author gonzalo.martin
- */
+
 @Entity
 @Table(name = "TAGS")
 @XmlRootElement
@@ -47,7 +44,6 @@ public class TagEntity implements Serializable {
         this.id = id;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -61,17 +57,11 @@ public class TagEntity implements Serializable {
             return false;
         }
         TagEntity other = (TagEntity) obj;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
     
     @Override
     public String toString() {
         return "com.kedb.entities.TagEntity[ id=" + id + " ]";
     }
-    
-    
-
 }

@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.kedb.persistence;
 
-import com.kedb.entities.RoleEntity;
 import com.kedb.entities.UserEntity;
 import com.kedb.logger.MessageLoggerLocal;
 import java.util.List;
@@ -27,7 +22,6 @@ public class UserDaoBean implements UserDaoBeanService {
     public void createUser(UserEntity user) {
         em.persist(user);
         logger.logInfo("Se agregó el usuario "+user.getUserName()+" con rol ");
-        
     }
     
     @Override
