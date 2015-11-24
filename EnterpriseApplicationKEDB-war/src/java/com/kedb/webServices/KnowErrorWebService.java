@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.kedb.webServices;
 
 import com.kedb.buisiness.KnowErrorService;
@@ -21,7 +17,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-
 
 @RequestScoped
 @Path("/knowError")
@@ -84,13 +79,22 @@ public class KnowErrorWebService {
     }
     
     //Retorna los KnowErrors filtrados por la palabra clave ingresada
-    //TODO:No funciona
     @GET
     @Path("/getKEKeyword")
     @Produces("application/json")
     public String getKnowErrorKeyword(@QueryParam("keyword") String keyword) {
         String ret = "";
         ret = bLocal.getKnowErrorKeyword(keyword);
+        return ret;
+    }
+    
+    //Retorna los KnowErrors filtrados por la palabra clave ingresada en la BD MySql
+    @GET
+    @Path("/getKEKeywordMySql")
+    @Produces("application/json")
+    public String getKnowErrorKeywordMySql(@QueryParam("keyword") String keyword) {
+        String ret = "";
+        ret = bLocal.getKnowErrorKeywordMySql(keyword);
         return ret;
     }
 }
