@@ -104,7 +104,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         solrQuery.setQuery("*:*");
         solrQuery.setFields("ID","CATEGORY","CAUSE","SOLUTION","WORKAROUND");
         solrQuery.setStart(0);
-        solrQuery.setRows(500);
+        solrQuery.setRows(25000);
         QueryResponse response = client.query(solrQuery);
         SolrDocumentList results = response.getResults();
         ret = JSONUtil.toJSON(results); //this has the json documents
