@@ -14,6 +14,6 @@ public interface UserDaoBeanService {
     void modifyUser(UserEntity user);
     void createUser(UserEntity user);
     UserEntity getUser(String id);
-    public List<UserEntity> getAllUsers();
+    String getAllUsers();
     
 }

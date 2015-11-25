@@ -1,6 +1,7 @@
 
 package com.kedb.persistence;
 
+import com.google.gson.Gson;
 import com.kedb.entities.UserEntity;
 import com.kedb.logger.MessageLoggerLocal;
 import java.util.List;
@@ -43,8 +44,12 @@ public class UserDaoBean implements UserDaoBeanService {
     }
   
     @Override
-    public List<UserEntity> getAllUsers() {
-        List<UserEntity> users = em.createNamedQuery("UserEntity.getAllUsers", UserEntity.class).getResultList();
-        return users;
+    public String getAllUsers() {
+        List<UserEntity> userEntityAux = null;
+        String ret = "";
+        userEntityAux = em.createNamedQuery("UserEntity.getAllUsers", UserEntity.class).getResultList();
+        Gson gson = new Gson();
+        ret = gson.toJson(userEntityAux);
+        return ret;
     }
 }

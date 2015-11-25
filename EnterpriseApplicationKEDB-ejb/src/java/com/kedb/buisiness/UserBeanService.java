@@ -16,6 +16,6 @@ public interface UserBeanService {
     void deleteUser(String userName);
     void modifyUser(String userName, UserEntity newUser);
     void findUser(String userName);
-    List<UserEntity> getAllUsers();
+    String getAllUsers();
     
 }

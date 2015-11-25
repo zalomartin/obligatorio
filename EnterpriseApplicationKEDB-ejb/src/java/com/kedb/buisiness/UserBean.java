@@ -51,7 +51,7 @@ private RoleBeanService roleBean;
     }
     
     @Override
-    public List<UserEntity> getAllUsers() {
+    public String getAllUsers() {
         return userDao.getAllUsers();
     }    
 }
