@@ -2,7 +2,6 @@
 package com.kedb.persistence;
 
 import com.google.gson.Gson;
-import com.kedb.buisiness.KnowErrorBean;
 import com.kedb.entities.KnowError;
 import com.kedb.messageProducer.MessageProducerBeanLocal;
 import java.util.List;
@@ -50,7 +49,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         System.out.println("RESPONSE " +response);
         solr.commit();          
         } catch (Exception ex){
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         mdb.theMessage("Se registro un nuevo KE");
     }
@@ -72,7 +71,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         SolrDocumentList results = response.getResults();
         ret = JSONUtil.toJSON(results); //this has the json documents
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);    
         }
         return ret;
     }
@@ -94,7 +93,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         SolrDocumentList results = response.getResults();
         ret = JSONUtil.toJSON(results); //this has the json documents
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);    
         }
         return ret;
     }
@@ -115,7 +114,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         SolrDocumentList results = response.getResults();
         ret = JSONUtil.toJSON(results); //this has the json documents
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);    
         }
         return ret;
     }

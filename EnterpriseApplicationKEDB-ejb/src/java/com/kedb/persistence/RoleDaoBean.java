@@ -41,7 +41,7 @@ public class RoleDaoBean implements RoleDaoService {
            throw new ApplicationKEDBException("El rol no existe");
         }catch(Exception e){
            Logger.getLogger(RoleDaoBean.class.getName()).log(Level.SEVERE, null, e);
-          throw new ApplicationKEDBException("Error no manejadp");
+          throw new ApplicationKEDBException("Error no manejado");
         }       
         return roleAux;
     }
