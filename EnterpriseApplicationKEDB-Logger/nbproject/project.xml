@@ -5,7 +5,21 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>EnterpriseApplicationKEDB-Logger</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
+            <included-library dirs="200">file.reference.commons-codec-1.9.jar</included-library>
+            <included-library dirs="200">file.reference.commons-logging.jar</included-library>
+            <included-library dirs="200">file.reference.commons-net-3.3.jar</included-library>
+            <included-library dirs="200">file.reference.gson-2.2.4-javadoc.jar</included-library>
+            <included-library dirs="200">file.reference.gson-2.2.4-sources.jar</included-library>
+            <included-library dirs="200">file.reference.gson-2.2.4.jar</included-library>
+            <included-library dirs="200">file.reference.gson-2.4.jar</included-library>
+            <included-library dirs="200">file.reference.httpclient-4.4.1.jar</included-library>
+            <included-library dirs="200">file.reference.httpcore-4.4.1.jar</included-library>
+            <included-library dirs="200">file.reference.httpmime-4.4.1.jar</included-library>
             <included-library dirs="200">file.reference.log4j-1.2.17.jar</included-library>
+            <included-library dirs="200">file.reference.noggit-0.5.jar</included-library>
+            <included-library dirs="200">file.reference.slf4j-api-1.6.1.jar</included-library>
+            <included-library dirs="200">file.reference.solr-core-5.3.0.jar</included-library>
+            <included-library dirs="200">file.reference.solr-solrj-5.3.0.jar</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>
