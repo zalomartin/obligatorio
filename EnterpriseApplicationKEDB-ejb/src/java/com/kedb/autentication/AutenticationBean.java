@@ -5,13 +5,11 @@
  */
 package com.kedb.autentication;
 
-import com.kedb.validation.UserBean;
 import com.kedb.validation.UserBeanService;
 import com.kedb.entities.UserEntity;
 import com.kedb.exceptions.ApplicationKEDBException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -21,7 +19,7 @@ import javax.ws.rs.core.Response;
 public class AutenticationBean implements AutenticationBeanService {
 
     @EJB
-    private SystemBean systemBean;
+    private SystemBeanService systemBean;
 
     @EJB
     private UserBeanService userBean;
@@ -30,7 +28,7 @@ public class AutenticationBean implements AutenticationBeanService {
     public String autentication(String userName, String password) throws ApplicationKEDBException {
         try {
             String ret= "ERROR";        
-            String token = systemBean.getServiceUsersKeysEntry(userName);
+            String token = systemBean.getToken(userName);
             //Return the token on the response       
             if(token!=null){
                 ret = token;            
@@ -52,5 +50,10 @@ public class AutenticationBean implements AutenticationBeanService {
             e.printStackTrace();
             throw new ApplicationKEDBException("Error en autenticacion" + e.getMessage());
         }
+    }
+
+    @Override
+    public void logOut(String userName) {      
+        systemBean.logOutUser(userName);
     }
 }

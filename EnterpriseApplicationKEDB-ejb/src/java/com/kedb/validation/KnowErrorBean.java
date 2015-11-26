@@ -1,6 +1,7 @@
 
 package com.kedb.validation;
 
+import com.kedb.autentication.SystemBeanService;
 import com.kedb.entities.KnowError;
 import com.kedb.persistence.KnowErrorDao;
 import java.util.logging.Level;
@@ -8,25 +9,34 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-
 @Stateless
-public class KnowErrorBean implements KnowErrorService {
+public class KnowErrorBean implements KnowErrorBeanService {
 
 @EJB
 private KnowErrorDao knowErrorDao;
 
+@EJB 
+private SystemBeanService systemBeanService;
+
     @Override
-    public void createKnowError(String cause, String solution, String workaround, String category) {
+    public String createKnowError(String cause, String solution, String workaround, String category, String token) {
+        String ret = "OK";
         try {   
+            if(systemBeanService.validToken(token))
+            {
             KnowError knowErrorEntity = new KnowError();
             knowErrorEntity.setCause(cause);
             knowErrorEntity.setSolution(solution);
             knowErrorEntity.setWorkaround(workaround);
             knowErrorEntity.setCategory(category);
             knowErrorDao.createKnowError(knowErrorEntity);
+            }else{
+                ret = "unauthorized operation";
+            }
         } catch (Exception ex) {
             Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
         }          
+        return ret;
     }    
 
     @Override

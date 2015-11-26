@@ -7,7 +7,6 @@ package com.kedb.autentication;
 
 import com.kedb.exceptions.ApplicationKEDBException;
 import javax.ejb.Local;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -16,4 +15,5 @@ import javax.ws.rs.core.Response;
 @Local
 public interface AutenticationBeanService {
     public String autentication(String userName, String password ) throws ApplicationKEDBException;
+    public void logOut(String userName);
 }

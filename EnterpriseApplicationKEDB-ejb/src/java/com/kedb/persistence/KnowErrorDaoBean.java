@@ -37,9 +37,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         //TODO: validaciones,logica de bd, try generico + try para cada uno de los métodos
         try {
         String solrPath = Configuration.getString("solr.path");        
-        System.out.println("solar pathhhhhh " + solrPath);
         HttpSolrClient solr = new HttpSolrClient(solrPath);                    
-        System.out.println("OK solar pathhhhhh  ");
         SolrInputDocument document = new SolrInputDocument();
         document.addField("id", knowError.getId());
         document.addField("cause", knowError.getCause());
@@ -50,10 +48,8 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         req.setAction( UpdateRequest.ACTION.COMMIT, false, false );
         req.add(document);
         UpdateResponse response = req.process(solr);
-        System.out.println("RESPONSE " +response);
         solr.commit();          
         } catch (Exception ex){
-            System.out.println("ERRROR solar pathhhhhh  ");
             Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         mdb.theMessage("Se registro un nuevo KE");
@@ -64,7 +60,8 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         String ret = "";
         String cat = category;
         try { 
-        HttpSolrClient client = new HttpSolrClient("http://localhost:8983/solr/kedb");
+        String solrPath = Configuration.getString("solr.path");        
+        HttpSolrClient client = new HttpSolrClient(solrPath); 
         client.setUseMultiPartPost(true);
         client.setConnectionTimeout(5000);
         SolrQuery solrQuery = new SolrQuery();
@@ -86,7 +83,8 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         String ret = "";
         String key = keyword;
         try { 
-        HttpSolrClient client = new HttpSolrClient("http://localhost:8983/solr/kedb");
+        String solrPath = Configuration.getString("solr.path");        
+        HttpSolrClient client = new HttpSolrClient(solrPath); 
         client.setUseMultiPartPost(true);
         client.setConnectionTimeout(5000);
         SolrQuery solrQuery = new SolrQuery();
@@ -107,7 +105,8 @@ public class KnowErrorDaoBean implements KnowErrorDao {
     public String getKnowErrorSolr() {
         String ret = "";
         try { 
-        HttpSolrClient client = new HttpSolrClient("http://localhost:8983/solr/kedb");
+        String solrPath = Configuration.getString("solr.path");        
+        HttpSolrClient client = new HttpSolrClient(solrPath); 
         client.setUseMultiPartPost(true);
         client.setConnectionTimeout(5000);
         SolrQuery solrQuery = new SolrQuery();

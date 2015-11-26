@@ -1,7 +1,8 @@
 
 package com.kedb.webservices;
 
-import com.kedb.validation.KnowErrorService;
+import com.kedb.autentication.SystemBeanService;
+import com.kedb.validation.KnowErrorBeanService;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -17,19 +18,22 @@ import javax.ws.rs.QueryParam;
 public class KnowErrorWebService {
 
     @EJB
-    private KnowErrorService bLocal;
-    
+    private KnowErrorBeanService knowErrorBeanService;        
     //CREACIÓN DE UN NUEVO KNOW ERROR 
     @POST
     @Path("/createKE")
     @Consumes("application/x-www-form-urlencoded")
-    public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category) {
-        if (bLocal == null) {
+    public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category, @FormParam("token") String token) {
+        if (knowErrorBeanService == null) {
             return "error";
         }
-        System.out.println("-----------cause" + cause);
-        bLocal.createKnowError(cause, solution, workaround, category);
-        return "OK";
+        String ret  = knowErrorBeanService.createKnowError(cause, solution, workaround, category, token);
+        if(ret!=null&&ret!="OK")
+        {
+            return ret;
+        }else{
+            return "OK";
+        }
     }
     
     //*******************************
@@ -42,7 +46,7 @@ public class KnowErrorWebService {
     @Produces("application/json")
     public String getAllKE() {
         String ret = "";
-        ret = bLocal.getKnowError();
+        ret = knowErrorBeanService.getKnowError();
         return ret;
     }
     
@@ -52,7 +56,7 @@ public class KnowErrorWebService {
     @Produces("application/json")
     public String getKnowErrorCategory(@QueryParam("category") String category) {
         String ret = "";
-        ret = bLocal.getKnowError(category);
+        ret = knowErrorBeanService.getKnowError(category);
         return ret;
     }
     
@@ -62,7 +66,7 @@ public class KnowErrorWebService {
     @Produces("application/json")
     public String getKnowErrorKeyword(@QueryParam("keyword") String keyword) {
         String ret = "";
-        ret = bLocal.getKnowErrorKeyword(keyword);
+        ret = knowErrorBeanService.getKnowErrorKeyword(keyword);
         return ret;
     }
 
@@ -75,7 +79,7 @@ public class KnowErrorWebService {
     @Produces("application/json")
     public String getAllKEMySql() {
         String ret = "";
-        ret = bLocal.getKnowErrorMySql();
+        ret = knowErrorBeanService.getKnowErrorMySql();
         return ret;
     }
     
@@ -85,7 +89,7 @@ public class KnowErrorWebService {
     @Produces("application/json")
     public String getKnowErrorKeywordMySql(@QueryParam("keyword") String keyword) {
         String ret = "";
-        ret = bLocal.getKnowErrorKeywordMySql(keyword);
+        ret = knowErrorBeanService.getKnowErrorKeywordMySql(keyword);
         return ret;
     }
     
@@ -95,7 +99,7 @@ public class KnowErrorWebService {
     @Produces("application/json")
     public String getKnowErrorCategoryMySql(@QueryParam("category") String category) {
         String ret = "";
-        ret = bLocal.getKnowErrorMySql(category);
+        ret = knowErrorBeanService.getKnowErrorMySql(category);
         return ret;
     }
 }

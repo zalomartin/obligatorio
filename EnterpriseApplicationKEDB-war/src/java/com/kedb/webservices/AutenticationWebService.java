@@ -6,7 +6,7 @@
 package com.kedb.webservices;
 
 import com.kedb.autentication.AutenticationBeanService;
-import com.kedb.autentication.SystemBean;
+import com.kedb.autentication.SystemBeanService;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
 import javax.security.auth.login.LoginException;
@@ -25,10 +25,7 @@ public class AutenticationWebService {
     private static final long serialVersionUID = -6663599014192066936L;
 
     @EJB
-    private AutenticationBeanService autBean;
-
-    @EJB
-    private SystemBean systemBean;
+    private AutenticationBeanService autenticationBean;
 
     @POST
     @Path("/login")
@@ -41,7 +38,7 @@ public class AutenticationWebService {
         try {
             System.out.println(userName + " " + password);
             // Authenticate the user using the credentials provided            
-            String responseBean = autBean.autentication(userName, password);
+            String responseBean = autenticationBean.autentication(userName, password);
             if (responseBean.equals("ERROR")) {
                 return Response.status(Response.Status.UNAUTHORIZED).build();                
             } else {
@@ -62,13 +59,12 @@ public class AutenticationWebService {
             @FormParam("username") String userName) throws LoginException {
 
         try {
-            systemBean.removeServiceUsersKeysEntry(userName);
-            return Response.ok("ok").build();
+            autenticationBean.logOut(userName);
+            return Response.ok("User "+ userName + "logut ok").build();
         } catch (Exception ex) {
             ex.printStackTrace();
             Response.status(Response.Status.UNAUTHORIZED);
         }
         return null;
     }
-
 }

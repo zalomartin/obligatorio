@@ -26,41 +26,34 @@ import javax.security.auth.login.LoginException;
 @Singleton
 @LocalBean
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
-public class SystemBean {
-  private String state;
+
+public class SystemBean implements SystemBeanService{
   private Map<String,String> serviceUsersKeysStorage = new HashMap();
 
-   @PostConstruct
-  void init() {      
-    System.out.println("INICIO SINGLETON");
-    state = "Ready";        
-  }
-  
-  @Lock(LockType.READ)
-  public String getState() {      
-    return state;
-  }
+  @Override
   @Lock(LockType.WRITE)
-  public void removeServiceUsersKeysEntry(String userName){
-    this.serviceUsersKeysStorage.remove(userName);
+  public void logOutUser(String userName){
+    if(this.serviceUsersKeysStorage.containsKey(userName)){
+        this.serviceUsersKeysStorage.remove(userName);
+    }
   }
-  
+  @Override
   @Lock(LockType.READ)
-  public String getServiceUsersKeysEntry(String userName){
+  public String getToken(String userName){
     return this.serviceUsersKeysStorage.get(userName);
   }
-  
-  @Lock(LockType.WRITE)
-  private void serviceUsersKeysStorage(String userName,String token) {
-    this.serviceUsersKeysStorage.put(userName, token);
-    System.out.println("Se guardo clave-valor" + userName+ "-" + token);
-  }
-  
+
+  @Override
+    @Lock(LockType.WRITE)
    public String issueToken(String userName) throws LoginException {   
      SecureRandom random = new SecureRandom();
      String token = new BigInteger(130, random).toString(32);
-     serviceUsersKeysStorage(userName,token);
+     this.serviceUsersKeysStorage.put(userName, token);     
      return token;
   }
-  
+
+  @Override
+  public boolean validToken(String token) {   
+      return this.serviceUsersKeysStorage.containsValue(token);
+  }
 }

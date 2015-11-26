@@ -4,7 +4,6 @@ import com.kedb.entities.RoleEntity;
 import com.kedb.entities.UserEntity;
 import com.kedb.exceptions.ApplicationKEDBException;
 import com.kedb.persistence.UserDaoBeanService;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -22,7 +21,7 @@ public class UserBean implements UserBeanService {
         if(userName==null || userName.isEmpty() || role==null || role.isEmpty() || password==null || password.isEmpty()){
            throw new ApplicationKEDBException("Datos invalidos");
         }
-            
+        
         UserEntity user = userDao.getUser(userName);
         if (user == null) {
             RoleEntity roleEntity = roleBean.getRole(role);
