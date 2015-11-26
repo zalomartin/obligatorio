@@ -9,7 +9,6 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
@@ -42,10 +41,10 @@ public class SystemBean implements SystemBeanService{
   public String getToken(String userName){
     return this.serviceUsersKeysStorage.get(userName);
   }
-
+  //TODO: validar que no exista una entrada con ese token
   @Override
-    @Lock(LockType.WRITE)
-   public String issueToken(String userName) throws LoginException {   
+  @Lock(LockType.WRITE)
+  public String issueToken(String userName) throws LoginException {   
      SecureRandom random = new SecureRandom();
      String token = new BigInteger(130, random).toString(32);
      this.serviceUsersKeysStorage.put(userName, token);     

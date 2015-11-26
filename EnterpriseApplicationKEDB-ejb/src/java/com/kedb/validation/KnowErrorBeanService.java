@@ -7,7 +7,7 @@ import javax.ejb.Local;
 @Local
 public interface KnowErrorBeanService {
     
-    public String createKnowError(String cause, String solution, String workaround, String category, String token);
+    public String createKnowError(String cause, String solution, String workaround, String category, String token, String userName);
     String getKnowError(String category);
     String getKnowErrorKeyword(String keyword);
     String getKnowError();

@@ -7,6 +7,7 @@ package com.kedb.webservices;
 
 import com.kedb.autentication.AutenticationBeanService;
 import com.kedb.autentication.SystemBeanService;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
 import javax.security.auth.login.LoginException;
@@ -27,6 +28,7 @@ public class AutenticationWebService {
     @EJB
     private AutenticationBeanService autenticationBean;
 
+    @PermitAll 
     @POST
     @Path("/login")
     @Consumes("application/x-www-form-urlencoded")

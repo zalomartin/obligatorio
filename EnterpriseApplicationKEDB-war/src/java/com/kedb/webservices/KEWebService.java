@@ -21,10 +21,10 @@ private KnowErrorBeanService knowErrorBeanService;
    @POST
    @Path("/createKEE")
    @Consumes("application/x-www-form-urlencoded")
-   public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category, @FormParam("token") String token) {
+   public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category, @FormParam("token") String token, @FormParam("userName") String userName) {
        if (knowErrorBeanService==null) return "error"; 
        System.out.println("-----------cause"+ cause);
-       knowErrorBeanService.createKnowError(cause, solution, workaround, category, token);
+       knowErrorBeanService.createKnowError(cause, solution, workaround, category, token, userName);
        return "OK";
     }
 }

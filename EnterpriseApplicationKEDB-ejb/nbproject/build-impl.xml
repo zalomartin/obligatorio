@@ -49,43 +49,6 @@ is divided into following sections:
         <property file="nbproject/project.properties"/>
     </target>
     <target depends="-pre-init,-init-private,-init-userdir,-init-user,-init-project,-init-macrodef-property" name="-do-init">
-        <ejbjarproject1:property name="platform.home" value="platforms.${platform.active}.home"/>
-        <ejbjarproject1:property name="platform.bootcp" value="platforms.${platform.active}.bootclasspath"/>
-        <ejbjarproject1:property name="platform.compiler" value="platforms.${platform.active}.compile"/>
-        <ejbjarproject1:property name="platform.javac.tmp" value="platforms.${platform.active}.javac"/>
-        <condition property="platform.javac" value="${platform.home}/bin/javac">
-            <equals arg1="${platform.javac.tmp}" arg2="$${platforms.${platform.active}.javac}"/>
-        </condition>
-        <property name="platform.javac" value="${platform.javac.tmp}"/>
-        <ejbjarproject1:property name="platform.java.tmp" value="platforms.${platform.active}.java"/>
-        <condition property="platform.java" value="${platform.home}/bin/java">
-            <equals arg1="${platform.java.tmp}" arg2="$${platforms.${platform.active}.java}"/>
-        </condition>
-        <property name="platform.java" value="${platform.java.tmp}"/>
-        <ejbjarproject1:property name="platform.javadoc.tmp" value="platforms.${platform.active}.javadoc"/>
-        <condition property="platform.javadoc" value="${platform.home}/bin/javadoc">
-            <equals arg1="${platform.javadoc.tmp}" arg2="$${platforms.${platform.active}.javadoc}"/>
-        </condition>
-        <property name="platform.javadoc" value="${platform.javadoc.tmp}"/>
-        <condition property="platform.invalid" value="true">
-            <or>
-                <contains string="${platform.javac}" substring="$${platforms."/>
-                <contains string="${platform.java}" substring="$${platforms."/>
-                <contains string="${platform.javadoc}" substring="$${platforms."/>
-            </or>
-        </condition>
-        <fail unless="platform.home">Must set platform.home</fail>
-        <fail unless="platform.bootcp">Must set platform.bootcp</fail>
-        <fail unless="platform.java">Must set platform.java</fail>
-        <fail unless="platform.javac">Must set platform.javac</fail>
-        <fail if="platform.invalid">
- The J2SE Platform is not correctly set up.
- Your active platform is: ${platform.active}, but the corresponding property "platforms.${platform.active}.home" is not found in the project's properties files. 
- Either open the project in the IDE and setup the Platform with the same name or add it manually.
- For example like this:
-     ant -Duser.properties.file=&lt;path_to_property_file&gt; jar (where you put the property "platforms.${platform.active}.home" in a .properties file)
-  or ant -Dplatforms.${platform.active}.home=&lt;path_to_JDK_home&gt; jar (where no properties file is used) 
-  </fail>
         <!-- Ensure configuration directory exists. -->
         <mkdir dir="${meta.inf}"/>
         <property name="runmain.jvmargs" value=""/>
@@ -267,7 +230,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
                 <property location="${build.dir}/empty" name="empty.dir"/>
                 <mkdir dir="${empty.dir}"/>
                 <mkdir dir="@{apgeneratedsrcdir}"/>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" executable="${platform.javac}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" srcdir="@{srcdir}" target="${javac.target}">
+                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="${javac.source}" srcdir="@{srcdir}" target="${javac.target}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
                             <include name="*"/>
@@ -305,7 +268,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
                 <property name="javac.compilerargs" value=""/>
                 <property location="${build.dir}/empty" name="empty.dir"/>
                 <mkdir dir="${empty.dir}"/>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" executable="${platform.javac}" fork="yes" includeantruntime="false" includes="@{includes}" source="${javac.source}" srcdir="@{srcdir}" target="${javac.target}">
+                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" includeantruntime="false" includes="@{includes}" source="${javac.source}" srcdir="@{srcdir}" target="${javac.target}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
                             <include name="*"/>
@@ -382,7 +345,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
             <attribute default="" name="testmethods"/>
             <element name="customize" optional="true"/>
             <sequential>
-                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" jvm="${platform.java}" showoutput="true" tempdir="${java.io.tmpdir}">
+                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" showoutput="true" tempdir="${java.io.tmpdir}">
                     <test methods="@{testmethods}" name="@{testincludes}" todir="${build.test.results.dir}"/>
                     <syspropertyset>
                         <propertyref prefix="test-sys-prop."/>
@@ -405,7 +368,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
             <element name="customize" optional="true"/>
             <sequential>
                 <property name="run.jvmargs.ide" value=""/>
-                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" jvm="${platform.java}" showoutput="true" tempdir="${build.dir}">
+                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" showoutput="true" tempdir="${build.dir}">
                     <batchtest todir="${build.test.results.dir}">
                         <fileset dir="${test.src.dir}" excludes="@{excludes},${excludes}" includes="@{includes}">
                             <filename name="@{testincludes}"/>
@@ -445,7 +408,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
                     </fileset>
                 </union>
                 <taskdef classname="org.testng.TestNGAntTask" classpath="${run.test.classpath}" name="testng"/>
-                <testng classfilesetref="test.set" failureProperty="tests.failed" jvm="${platform.java}" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="EnterpriseApplicationKEDB-ejb" testname="TestNG tests" workingDir="${basedir}">
+                <testng classfilesetref="test.set" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="EnterpriseApplicationKEDB-ejb" testname="TestNG tests" workingDir="${basedir}">
                     <xmlfileset dir="${build.test.classes.dir}" includes="@{testincludes}"/>
                     <propertyset>
                         <propertyref prefix="test-sys-prop."/>
@@ -525,7 +488,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
             <attribute default="" name="testmethods"/>
             <element name="customize" optional="true"/>
             <sequential>
-                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" jvm="${platform.java}" showoutput="true" tempdir="${java.io.tmpdir}">
+                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" showoutput="true" tempdir="${java.io.tmpdir}">
                     <test methods="@{testmethods}" name="@{testincludes}" todir="${build.test.results.dir}"/>
                     <syspropertyset>
                         <propertyref prefix="test-sys-prop."/>
@@ -550,7 +513,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
             <element name="customize" optional="true"/>
             <sequential>
                 <property name="run.jvmargs.ide" value=""/>
-                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" jvm="${platform.java}" showoutput="true" tempdir="${build.dir}">
+                <junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" showoutput="true" tempdir="${build.dir}">
                     <batchtest todir="${build.test.results.dir}">
                         <fileset dir="${test.src.dir}" excludes="@{excludes},${excludes}" includes="@{includes}">
                             <filename name="@{testincludes}"/>
@@ -675,7 +638,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
             <attribute default="${main.class}" name="classname"/>
             <element name="customize" optional="true"/>
             <sequential>
-                <java classname="@{classname}" fork="true" jvm="${platform.java}">
+                <java classname="@{classname}" fork="true">
                     <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
                     <jvmarg line="${runmain.jvmargs}"/>
                     <classpath>
@@ -699,9 +662,6 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
                     <classpath>
                         <path path="@{classpath}"/>
                     </classpath>
-                    <bootclasspath>
-                        <path path="${platform.bootcp}"/>
-                    </bootclasspath>
                 </nbjpdastart>
             </sequential>
         </macrodef>
@@ -722,9 +682,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
         </macrodef>
     </target>
     <target name="-init-debug-args">
-        <exec executable="${platform.java}" outputproperty="version-output">
-            <arg value="-version"/>
-        </exec>
+        <property name="version-output" value="java version &quot;${ant.java.version}"/>
         <condition property="have-jdk-older-than-1.4">
             <or>
                 <contains string="${version-output}" substring="java version &quot;1.0"/>
@@ -750,10 +708,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
             <attribute default="${application.args}" name="args"/>
             <element name="customize" optional="true"/>
             <sequential>
-                <java classname="@{classname}" fork="true" jvm="${platform.java}">
-                    <bootclasspath>
-                        <path path="${platform.bootcp}"/>
-                    </bootclasspath>
+                <java classname="@{classname}" fork="true">
                     <jvmarg line="${debug-args-line}"/>
                     <jvmarg value="-Xrunjdwp:transport=${debug-transport},address=${jpda.address}"/>
                     <jvmarg line="${runmain.jvmargs}"/>
@@ -854,6 +809,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.commons-logging.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.commons-net-3.3.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.eclipselink.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.gf-client.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.gson-2.2.4-javadoc.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.gson-2.2.4-sources.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.gson-2.2.4.jar}" todir="${build.classes.dir}"/>
@@ -861,6 +817,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.httpcore-4.4.1.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.httpmime-4.4.1.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.javax.persistence_2.1.0.v201304241213.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.jms.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.log4j-1.2.17.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.mysql-connector-java-5.1.37-bin.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.noggit-0.5.jar}" todir="${build.classes.dir}"/>
@@ -869,8 +826,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.slf4j-api-1.6.1.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.solr-core-5.3.0.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.solr-solrj-5.3.0.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.gf-client.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.jms.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
         <basename file="${reference.EnterpriseApplicationKEDB-Logger.dist}" property="manifest.reference.EnterpriseApplicationKEDB-Logger.dist"/>
@@ -879,6 +834,7 @@ exists or setup the property manually. For example like this:
         <basename file="${file.reference.commons-logging.jar}" property="manifest.file.reference.commons-logging.jar"/>
         <basename file="${file.reference.commons-net-3.3.jar}" property="manifest.file.reference.commons-net-3.3.jar"/>
         <basename file="${file.reference.eclipselink.jar}" property="manifest.file.reference.eclipselink.jar"/>
+        <basename file="${file.reference.gf-client.jar}" property="manifest.file.reference.gf-client.jar"/>
         <basename file="${file.reference.gson-2.2.4-javadoc.jar}" property="manifest.file.reference.gson-2.2.4-javadoc.jar"/>
         <basename file="${file.reference.gson-2.2.4-sources.jar}" property="manifest.file.reference.gson-2.2.4-sources.jar"/>
         <basename file="${file.reference.gson-2.2.4.jar}" property="manifest.file.reference.gson-2.2.4.jar"/>
@@ -886,6 +842,7 @@ exists or setup the property manually. For example like this:
         <basename file="${file.reference.httpcore-4.4.1.jar}" property="manifest.file.reference.httpcore-4.4.1.jar"/>
         <basename file="${file.reference.httpmime-4.4.1.jar}" property="manifest.file.reference.httpmime-4.4.1.jar"/>
         <basename file="${file.reference.javax.persistence_2.1.0.v201304241213.jar}" property="manifest.file.reference.javax.persistence_2.1.0.v201304241213.jar"/>
+        <basename file="${file.reference.jms.jar}" property="manifest.file.reference.jms.jar"/>
         <basename file="${file.reference.log4j-1.2.17.jar}" property="manifest.file.reference.log4j-1.2.17.jar"/>
         <basename file="${file.reference.mysql-connector-java-5.1.37-bin.jar}" property="manifest.file.reference.mysql-connector-java-5.1.37-bin.jar"/>
         <basename file="${file.reference.noggit-0.5.jar}" property="manifest.file.reference.noggit-0.5.jar"/>
@@ -894,8 +851,6 @@ exists or setup the property manually. For example like this:
         <basename file="${file.reference.slf4j-api-1.6.1.jar}" property="manifest.file.reference.slf4j-api-1.6.1.jar"/>
         <basename file="${file.reference.solr-core-5.3.0.jar}" property="manifest.file.reference.solr-core-5.3.0.jar"/>
         <basename file="${file.reference.solr-solrj-5.3.0.jar}" property="manifest.file.reference.solr-solrj-5.3.0.jar"/>
-        <basename file="${file.reference.gf-client.jar}" property="manifest.file.reference.gf-client.jar"/>
-        <basename file="${file.reference.jms.jar}" property="manifest.file.reference.jms.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
             <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 jar-11 jar-12 jar-13 jar-14 jar-15 jar-16 jar-17 jar-18 jar-19 jar-20 jar-21 jar-22 jar-23 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.reference.EnterpriseApplicationKEDB-Logger.dist}"/>
@@ -904,23 +859,23 @@ exists or setup the property manually. For example like this:
             <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.commons-logging.jar}"/>
             <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.commons-net-3.3.jar}"/>
             <attribute name="jar-6-Extension-Name" value="${manifest.file.reference.eclipselink.jar}"/>
-            <attribute name="jar-7-Extension-Name" value="${manifest.file.reference.gson-2.2.4-javadoc.jar}"/>
-            <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.gson-2.2.4-sources.jar}"/>
-            <attribute name="jar-9-Extension-Name" value="${manifest.file.reference.gson-2.2.4.jar}"/>
-            <attribute name="jar-10-Extension-Name" value="${manifest.file.reference.httpclient-4.4.1.jar}"/>
-            <attribute name="jar-11-Extension-Name" value="${manifest.file.reference.httpcore-4.4.1.jar}"/>
-            <attribute name="jar-12-Extension-Name" value="${manifest.file.reference.httpmime-4.4.1.jar}"/>
-            <attribute name="jar-13-Extension-Name" value="${manifest.file.reference.javax.persistence_2.1.0.v201304241213.jar}"/>
-            <attribute name="jar-14-Extension-Name" value="${manifest.file.reference.log4j-1.2.17.jar}"/>
-            <attribute name="jar-15-Extension-Name" value="${manifest.file.reference.mysql-connector-java-5.1.37-bin.jar}"/>
-            <attribute name="jar-16-Extension-Name" value="${manifest.file.reference.noggit-0.5.jar}"/>
-            <attribute name="jar-17-Extension-Name" value="${manifest.file.reference.org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar}"/>
-            <attribute name="jar-18-Extension-Name" value="${manifest.file.reference.org.eclipse.persistence.jpa.modelgen_2.5.2.v20140319-9ad6abd.jar}"/>
-            <attribute name="jar-19-Extension-Name" value="${manifest.file.reference.slf4j-api-1.6.1.jar}"/>
-            <attribute name="jar-20-Extension-Name" value="${manifest.file.reference.solr-core-5.3.0.jar}"/>
-            <attribute name="jar-21-Extension-Name" value="${manifest.file.reference.solr-solrj-5.3.0.jar}"/>
-            <attribute name="jar-22-Extension-Name" value="${manifest.file.reference.gf-client.jar}"/>
-            <attribute name="jar-23-Extension-Name" value="${manifest.file.reference.jms.jar}"/>
+            <attribute name="jar-7-Extension-Name" value="${manifest.file.reference.gf-client.jar}"/>
+            <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.gson-2.2.4-javadoc.jar}"/>
+            <attribute name="jar-9-Extension-Name" value="${manifest.file.reference.gson-2.2.4-sources.jar}"/>
+            <attribute name="jar-10-Extension-Name" value="${manifest.file.reference.gson-2.2.4.jar}"/>
+            <attribute name="jar-11-Extension-Name" value="${manifest.file.reference.httpclient-4.4.1.jar}"/>
+            <attribute name="jar-12-Extension-Name" value="${manifest.file.reference.httpcore-4.4.1.jar}"/>
+            <attribute name="jar-13-Extension-Name" value="${manifest.file.reference.httpmime-4.4.1.jar}"/>
+            <attribute name="jar-14-Extension-Name" value="${manifest.file.reference.javax.persistence_2.1.0.v201304241213.jar}"/>
+            <attribute name="jar-15-Extension-Name" value="${manifest.file.reference.jms.jar}"/>
+            <attribute name="jar-16-Extension-Name" value="${manifest.file.reference.log4j-1.2.17.jar}"/>
+            <attribute name="jar-17-Extension-Name" value="${manifest.file.reference.mysql-connector-java-5.1.37-bin.jar}"/>
+            <attribute name="jar-18-Extension-Name" value="${manifest.file.reference.noggit-0.5.jar}"/>
+            <attribute name="jar-19-Extension-Name" value="${manifest.file.reference.org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar}"/>
+            <attribute name="jar-20-Extension-Name" value="${manifest.file.reference.org.eclipse.persistence.jpa.modelgen_2.5.2.v20140319-9ad6abd.jar}"/>
+            <attribute name="jar-21-Extension-Name" value="${manifest.file.reference.slf4j-api-1.6.1.jar}"/>
+            <attribute name="jar-22-Extension-Name" value="${manifest.file.reference.solr-core-5.3.0.jar}"/>
+            <attribute name="jar-23-Extension-Name" value="${manifest.file.reference.solr-solrj-5.3.0.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
@@ -930,6 +885,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.commons-logging.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.commons-net-3.3.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.eclipselink.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.gf-client.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.gson-2.2.4-javadoc.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.gson-2.2.4-sources.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.gson-2.2.4.jar}" todir="${dist.ear.dir}/lib"/>
@@ -937,6 +893,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.httpcore-4.4.1.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.httpmime-4.4.1.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.javax.persistence_2.1.0.v201304241213.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.jms.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.log4j-1.2.17.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.mysql-connector-java-5.1.37-bin.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.noggit-0.5.jar}" todir="${dist.ear.dir}/lib"/>
@@ -945,8 +902,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.slf4j-api-1.6.1.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.solr-core-5.3.0.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.solr-solrj-5.3.0.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.gf-client.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.jms.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">
@@ -1105,9 +1060,6 @@ exists or setup the property manually. For example like this:
             <sourcepath>
                 <path path="${web.docbase.dir}"/>
             </sourcepath>
-            <bootclasspath>
-                <path path="${platform.bootcp}"/>
-            </bootclasspath>
         </nbjpdaconnect>
     </target>
     <target depends="init" if="netbeans.home" name="-debug-start-debugger">
@@ -1214,7 +1166,7 @@ exists or setup the property manually. For example like this:
             -->
     <target depends="init" if="have.sources" name="javadoc-build">
         <mkdir dir="${dist.javadoc.dir}"/>
-        <javadoc additionalparam="${javadoc.additionalparam}" author="${javadoc.author}" charset="UTF-8" destdir="${dist.javadoc.dir}" docencoding="UTF-8" encoding="${javadoc.encoding.used}" executable="${platform.javadoc}" failonerror="true" noindex="${javadoc.noindex}" nonavbar="${javadoc.nonavbar}" notree="${javadoc.notree}" private="${javadoc.private}" source="${javac.source}" splitindex="${javadoc.splitindex}" use="${javadoc.use}" useexternalfile="true" version="${javadoc.version}" windowtitle="${javadoc.windowtitle}">
+        <javadoc additionalparam="${javadoc.additionalparam}" author="${javadoc.author}" charset="UTF-8" destdir="${dist.javadoc.dir}" docencoding="UTF-8" encoding="${javadoc.encoding.used}" failonerror="true" noindex="${javadoc.noindex}" nonavbar="${javadoc.nonavbar}" notree="${javadoc.notree}" private="${javadoc.private}" source="${javac.source}" splitindex="${javadoc.splitindex}" use="${javadoc.use}" useexternalfile="true" version="${javadoc.version}" windowtitle="${javadoc.windowtitle}">
             <classpath>
                 <path path="${javac.classpath}:${j2ee.platform.classpath}"/>
             </classpath>

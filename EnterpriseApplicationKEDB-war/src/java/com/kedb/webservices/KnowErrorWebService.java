@@ -1,7 +1,6 @@
 
 package com.kedb.webservices;
 
-import com.kedb.autentication.SystemBeanService;
 import com.kedb.validation.KnowErrorBeanService;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
@@ -23,11 +22,11 @@ public class KnowErrorWebService {
     @POST
     @Path("/createKE")
     @Consumes("application/x-www-form-urlencoded")
-    public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category, @FormParam("token") String token) {
+    public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category, @FormParam("token") String token, @FormParam("userName") String userName) {
         if (knowErrorBeanService == null) {
             return "error";
         }
-        String ret  = knowErrorBeanService.createKnowError(cause, solution, workaround, category, token);
+        String ret  = knowErrorBeanService.createKnowError(cause, solution, workaround, category, token, userName);
         if(ret!=null&&ret!="OK")
         {
             return ret;
