@@ -1,0 +1,66 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.kedb.autentication;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
+import javax.ejb.Singleton;
+import javax.ejb.LocalBean;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
+import javax.ejb.Startup;
+import javax.security.auth.login.LoginException;
+
+/**
+ * @author gonzalom
+ */
+@Startup
+@Singleton
+@LocalBean
+@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
+public class SystemBean {
+  private String state;
+  private Map<String,String> serviceUsersKeysStorage = new HashMap();
+
+   @PostConstruct
+  void init() {      
+    System.out.println("INICIO SINGLETON");
+    state = "Ready";        
+  }
+  
+  @Lock(LockType.READ)
+  public String getState() {      
+    return state;
+  }
+  @Lock(LockType.WRITE)
+  public void removeServiceUsersKeysEntry(String userName){
+    this.serviceUsersKeysStorage.remove(userName);
+  }
+  
+  @Lock(LockType.READ)
+  public String getServiceUsersKeysEntry(String userName){
+    return this.serviceUsersKeysStorage.get(userName);
+  }
+  
+  @Lock(LockType.WRITE)
+  private void serviceUsersKeysStorage(String userName,String token) {
+    this.serviceUsersKeysStorage.put(userName, token);
+    System.out.println("Se guardo clave-valor" + userName+ "-" + token);
+  }
+  
+   public String issueToken(String userName) throws LoginException {   
+     SecureRandom random = new SecureRandom();
+     String token = new BigInteger(130, random).toString(32);
+     serviceUsersKeysStorage(userName,token);
+     return token;
+  }
+  
+}

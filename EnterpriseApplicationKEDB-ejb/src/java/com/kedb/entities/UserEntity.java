@@ -1,6 +1,9 @@
 package com.kedb.entities;
 
+import com.kedb.exceptions.ApplicationKEDBException;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,17 +15,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @NamedQueries({
-    @NamedQuery(name = "UserEntity.getAllUsers", query = "SELECT u from UserEntity u ")}
+    @NamedQuery(name = "UserEntity.getAllUsers", query = "SELECT u FROM UserEntity u "),
+    @NamedQuery(name = "UserEntity.findUserByName", query = "SELECT u FROM UserEntity u  WHERE upper(u.userName) = upper(:userName)") }
 )
-
 @Entity
 @Table(name = "USERS")
 @XmlRootElement
 public class UserEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    private static final int MD5_PASSWORD_LENGTH = 16;   
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +37,9 @@ public class UserEntity implements Serializable {
  
     @JoinColumn(name = "USER_ROLE", nullable = true, unique = false)
     private RoleEntity role;
+    
+    @Column(name = "USER_PWD", nullable = false)
+    private String password;
 
     public UserEntity() {
     }
@@ -82,5 +88,26 @@ public class UserEntity implements Serializable {
     @Override
     public String toString() {
         return "com.kedb.entities.UserEntity[ id=" + id + " ]";
+    }
+    
+     public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) throws ApplicationKEDBException {
+        this.password = encriptPassword(password);
+    }
+
+    //TODO: ver si se puede poner en un lugar mejor como Utilities
+    public String encriptPassword(String password) throws ApplicationKEDBException {
+     try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(password.getBytes());
+            BigInteger hash = new BigInteger(1, md5.digest());
+            return hash.toString(MD5_PASSWORD_LENGTH);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ApplicationKEDBException("Error al generar clave");                    
+        }		   
     }
 }

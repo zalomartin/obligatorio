@@ -1,5 +1,5 @@
 
-package com.kedb.buisiness;
+package com.kedb.validation;
 
 import com.kedb.persistence.TagDaoService;
 import javax.ejb.EJB;

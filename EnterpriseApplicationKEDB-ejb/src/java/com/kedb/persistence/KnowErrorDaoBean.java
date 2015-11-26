@@ -2,6 +2,7 @@
 package com.kedb.persistence;
 
 import com.google.gson.Gson;
+import com.kedb.configurations.Configuration;
 import com.kedb.entities.KnowError;
 import com.kedb.messageProducer.MessageProducerBeanLocal;
 import java.util.List;
@@ -33,9 +34,12 @@ public class KnowErrorDaoBean implements KnowErrorDao {
     @Override
     public void createKnowError(KnowError knowError) {
         em.persist(knowError);
-    //TODO: validaciones,logica de bd, try generico + try para cada uno de los métodos
+        //TODO: validaciones,logica de bd, try generico + try para cada uno de los métodos
         try {
-        HttpSolrClient solr = new HttpSolrClient("http://localhost:8983/solr/kedb");                    
+        String solrPath = Configuration.getString("solr.path");        
+        System.out.println("solar pathhhhhh " + solrPath);
+        HttpSolrClient solr = new HttpSolrClient(solrPath);                    
+        System.out.println("OK solar pathhhhhh  ");
         SolrInputDocument document = new SolrInputDocument();
         document.addField("id", knowError.getId());
         document.addField("cause", knowError.getCause());
@@ -49,6 +53,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
         System.out.println("RESPONSE " +response);
         solr.commit();          
         } catch (Exception ex){
+            System.out.println("ERRROR solar pathhhhhh  ");
             Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         mdb.theMessage("Se registro un nuevo KE");

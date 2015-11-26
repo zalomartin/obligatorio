@@ -1,48 +1,60 @@
-
 package com.kedb.persistence;
 
 import com.google.gson.Gson;
 import com.kedb.entities.UserEntity;
+import com.kedb.exceptions.ApplicationKEDBException;
 import com.kedb.logger.MessageLoggerLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
 
 @Stateless
 public class UserDaoBean implements UserDaoBeanService {
+
     @PersistenceContext
     EntityManager em;
 
     @EJB
     private MessageLoggerLocal logger;
-    
+
     @Override
     public void createUser(UserEntity user) {
         em.persist(user);
-        logger.logInfo("Se agregó el usuario "+user.getUserName()+" con rol ");
+        logger.logInfo("Se agregó el usuario " + user.getUserName() + " con rol ");
     }
-    
+
     @Override
     public void deleteUser(UserEntity user) {
-        
-        logger.logInfo("Se eliminó el usuario "+user.getUserName());
+
+        logger.logInfo("Se eliminó el usuario " + user.getUserName());
     }
 
     @Override
     public void modifyUser(UserEntity user) {
-        
-        logger.logInfo("Se modificó el usuario "+user.getUserName());        
+        logger.logInfo("Se modificó el usuario " + user.getUserName());
     }
 
     @Override
-    public UserEntity getUser(String id) {
-        //select
-        return null;
+    public UserEntity getUser(String userName) throws ApplicationKEDBException {
+        UserEntity userAux = null;
+        try {
+            userAux = em.createNamedQuery("UserEntity.findUserByName", UserEntity.class)
+                    .setParameter("userName", userName)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // logger.getLogger(UserDaoBean.class.getName()).log(Level.WARNING, null, e);
+            return null;
+        } catch (Exception e) {
+            //  logger.getLogger(UserDaoBean.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            throw new ApplicationKEDBException("Error no manejado " + e.getMessage());
+        }
+        return userAux;
     }
-  
+
     @Override
     public String getAllUsers() {
         List<UserEntity> userEntityAux = null;
