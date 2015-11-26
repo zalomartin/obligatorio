@@ -31,7 +31,6 @@ private RoleDaoService roleDao;
 
     @Override
     public RoleEntity getRole(String description) throws ApplicationKEDBException {
-        System.out.println("Llego al getRole del RoleBean");
             RoleEntity roleAux = roleDao.getRole(description);
         return roleAux;
     }       

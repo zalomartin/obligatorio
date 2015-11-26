@@ -19,7 +19,7 @@ public class UserBean implements UserBeanService {
     @Override
     public void createUser(String userName, String role, String password) throws ApplicationKEDBException {
         if(userName==null || userName.isEmpty() || role==null || role.isEmpty() || password==null || password.isEmpty()){
-           throw new ApplicationKEDBException("Datos invalidos");
+           throw new ApplicationKEDBException("\"Invalid Input, required fields: userName, role, password");
         }
         
         UserEntity user = userDao.getUser(userName);
@@ -41,10 +41,12 @@ public class UserBean implements UserBeanService {
 
     @Override
     public void deleteUser(String userName) {
+      throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void modifyUser(String userName, UserEntity newUser) {
+      throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override

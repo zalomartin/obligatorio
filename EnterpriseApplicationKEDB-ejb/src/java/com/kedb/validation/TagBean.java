@@ -26,8 +26,4 @@ private TagDaoService tagDao;
     public void deleteTag(long id) {
         tagDao.deleteTag(id);
     }
-    
-    
-    
-    
 }

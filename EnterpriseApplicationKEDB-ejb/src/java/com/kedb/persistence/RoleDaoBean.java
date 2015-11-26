@@ -19,14 +19,17 @@ public class RoleDaoBean implements RoleDaoService {
     
     @Override
     public void createRole(String description) {
+          throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void modifyRole(long id, String description) {
+         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void deleteRole(long id) {
+         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override

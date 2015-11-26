@@ -5,6 +5,7 @@ import com.kedb.autentication.SystemBeanService;
 import com.kedb.entities.KnowError;
 import com.kedb.entities.UserEntity;
 import com.kedb.enums.EnumRoles;
+import com.kedb.exceptions.ApplicationKEDBException;
 import com.kedb.persistence.KnowErrorDao;
 import com.kedb.persistence.UserDaoBeanService;
 import java.util.logging.Level;
@@ -28,6 +29,10 @@ private UserDaoBeanService userDaoBeanService;
     public String createKnowError(String cause, String solution, String workaround, String category, String token, String userName) {
         String ret = "unauthorized operation";
         try {   
+           if(cause==null || cause.isEmpty() || solution==null || solution.isEmpty() || workaround==null || workaround.isEmpty() || category==null || category.isEmpty() || token==null || token.isEmpty()  || userName==null || userName.isEmpty()){
+               throw new ApplicationKEDBException("Invalid Input, required fields: cause, solution, workaround, category, token, userName");
+            }
+            
             if(systemBeanService.validToken(token))
             {                
                UserEntity user =  userDaoBeanService.getUser(userName);

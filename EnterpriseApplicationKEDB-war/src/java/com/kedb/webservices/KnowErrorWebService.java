@@ -23,15 +23,17 @@ public class KnowErrorWebService {
     @Path("/createKE")
     @Consumes("application/x-www-form-urlencoded")
     public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category, @FormParam("token") String token, @FormParam("userName") String userName) {
-        if (knowErrorBeanService == null) {
-            return "error";
+
+        if(cause==null || cause.isEmpty() || solution==null || solution.isEmpty() || workaround==null || workaround.isEmpty() || category==null || category.isEmpty() || token==null || token.isEmpty()  || userName==null || userName.isEmpty()){
+            return ("Invalid Input, required fields: cause, solution, workaround, category, token, userName");
         }
+        
         String ret  = knowErrorBeanService.createKnowError(cause, solution, workaround, category, token, userName);
-        if(ret!=null&&ret!="OK")
+        if(ret!=null && ret!="OK")
         {
-            return ret;
+          return ret;
         }else{
-            return "OK";
+          return "OK";
         }
     }
     
@@ -44,9 +46,7 @@ public class KnowErrorWebService {
     @Path("/getAllKE")
     @Produces("application/json")
     public String getAllKE() {
-        String ret = "";
-        ret = knowErrorBeanService.getKnowError();
-        return ret;
+        return knowErrorBeanService.getKnowError();
     }
     
     //RETORNA KNOW ERRORS FILTRADOS POR UNA CATEGORIA
@@ -54,9 +54,7 @@ public class KnowErrorWebService {
     @Path("/getKECategory")
     @Produces("application/json")
     public String getKnowErrorCategory(@QueryParam("category") String category) {
-        String ret = "";
-        ret = knowErrorBeanService.getKnowError(category);
-        return ret;
+        return  knowErrorBeanService.getKnowError(category);
     }
     
     //Retorna los KnowErrors filtrados por la palabra clave ingresada
@@ -64,9 +62,7 @@ public class KnowErrorWebService {
     @Path("/getKEKeyword")
     @Produces("application/json")
     public String getKnowErrorKeyword(@QueryParam("keyword") String keyword) {
-        String ret = "";
-        ret = knowErrorBeanService.getKnowErrorKeyword(keyword);
-        return ret;
+        return knowErrorBeanService.getKnowErrorKeyword(keyword);
     }
 
     //*******************************
@@ -77,9 +73,7 @@ public class KnowErrorWebService {
     @Path("/getAllKEMySql")
     @Produces("application/json")
     public String getAllKEMySql() {
-        String ret = "";
-        ret = knowErrorBeanService.getKnowErrorMySql();
-        return ret;
+        return knowErrorBeanService.getKnowErrorMySql();
     }
     
     //Retorna los KnowErrors filtrados por la palabra clave ingresada en la BD MySql
@@ -87,9 +81,7 @@ public class KnowErrorWebService {
     @Path("/getKEKeywordMySql")
     @Produces("application/json")
     public String getKnowErrorKeywordMySql(@QueryParam("keyword") String keyword) {
-        String ret = "";
-        ret = knowErrorBeanService.getKnowErrorKeywordMySql(keyword);
-        return ret;
+        return knowErrorBeanService.getKnowErrorKeywordMySql(keyword);
     }
     
     //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD MySql
@@ -97,8 +89,6 @@ public class KnowErrorWebService {
     @Path("/getKECategoryMySql")
     @Produces("application/json")
     public String getKnowErrorCategoryMySql(@QueryParam("category") String category) {
-        String ret = "";
-        ret = knowErrorBeanService.getKnowErrorMySql(category);
-        return ret;
+        return knowErrorBeanService.getKnowErrorMySql(category);
     }
 }
