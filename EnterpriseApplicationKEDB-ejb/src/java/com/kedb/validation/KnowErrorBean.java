@@ -1,7 +1,7 @@
 
 package com.kedb.validation;
 
-import com.kedb.autentication.SystemBeanService;
+import com.kedb.authentication.TokenBeanService;
 import com.kedb.entities.KnowError;
 import com.kedb.entities.UserEntity;
 import com.kedb.enums.EnumRoles;
@@ -20,7 +20,7 @@ public class KnowErrorBean implements KnowErrorBeanService {
 private KnowErrorDao knowErrorDao;
 
 @EJB 
-private SystemBeanService systemBeanService;
+private TokenBeanService tokenBeanService;
 
 @EJB
 private UserDaoBeanService userDaoBeanService;
@@ -33,7 +33,7 @@ private UserDaoBeanService userDaoBeanService;
                throw new ApplicationKEDBException("Invalid Input, required fields: cause, solution, workaround, category, token, userName");
             }
             
-            if(systemBeanService.validToken(token))
+            if(tokenBeanService.validToken(token))
             {                
                UserEntity user =  userDaoBeanService.getUser(userName);
                String userRol = user.getRole().getDescription().toUpperCase();
