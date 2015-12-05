@@ -13,13 +13,17 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException
 public class ApplicationKEDBException extends Exception {
+
     private static final long serialVersionUID = 1L;
+
     public ApplicationKEDBException() {
         super();
     }
+
     public ApplicationKEDBException(String message) {
         super(message);
     }
+
     public ApplicationKEDBException(String message, Throwable cause) {
         super(message, cause);
     }

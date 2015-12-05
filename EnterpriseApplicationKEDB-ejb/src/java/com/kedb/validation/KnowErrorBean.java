@@ -1,4 +1,3 @@
-
 package com.kedb.validation;
 
 import com.kedb.authentication.TokenBeanService;
@@ -16,29 +15,28 @@ import javax.ejb.Stateless;
 @Stateless
 public class KnowErrorBean implements KnowErrorBeanService {
 
-@EJB
-private KnowErrorDao knowErrorDao;
+    @EJB
+    private KnowErrorDao knowErrorDao;
 
-@EJB 
-private TokenBeanService tokenBeanService;
+    @EJB
+    private TokenBeanService tokenBeanService;
 
-@EJB
-private UserDaoBeanService userDaoBeanService;
+    @EJB
+    private UserDaoBeanService userDaoBeanService;
 
     @Override
     public String createKnowError(String cause, String solution, String workaround, String category, String token, String userName) {
         String ret = "unauthorized operation";
-        try {   
-           if(cause==null || cause.isEmpty() || solution==null || solution.isEmpty() || workaround==null || workaround.isEmpty() || category==null || category.isEmpty() || token==null || token.isEmpty()  || userName==null || userName.isEmpty()){
-               throw new ApplicationKEDBException("Invalid Input, required fields: cause, solution, workaround, category, token, userName");
+        try {
+            if (cause == null || cause.isEmpty() || solution == null || solution.isEmpty() || workaround == null || workaround.isEmpty() || category == null || category.isEmpty() || token == null || token.isEmpty() || userName == null || userName.isEmpty()) {
+                throw new ApplicationKEDBException("Invalid Input, required fields: cause, solution, workaround, category, token, userName");
             }
-            
-            if(tokenBeanService.validToken(token))
-            {                
-               UserEntity user =  userDaoBeanService.getUser(userName);
-               String userRol = user.getRole().getDescription().toUpperCase();
-               String adminRol = EnumRoles.ADMIN.toString();
-               if(user!=null && userRol.equals(adminRol)){
+
+            if (tokenBeanService.validToken(token)) {
+                UserEntity user = userDaoBeanService.getUser(userName);
+                String userRol = user.getRole().getDescription().toUpperCase();
+                String adminRol = EnumRoles.ADMIN.toString();
+                if (user != null && userRol.equals(adminRol)) {
                     KnowError knowErrorEntity = new KnowError();
                     knowErrorEntity.setCause(cause);
                     knowErrorEntity.setSolution(solution);
@@ -47,46 +45,46 @@ private UserDaoBeanService userDaoBeanService;
                     knowErrorDao.createKnowError(knowErrorEntity);
                     ret = "OK";
                 }
-            }            
+            }
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
-        }          
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return ret;
-    }    
+    }
 
     @Override
-    public String getKnowError(String category) {  
+    public String getKnowError(String category) {
         String ret = "";
         try {
             ret = knowErrorDao.getKnowErrorSolr(category);
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
     }
-    
+
     @Override
-    public String getKnowErrorKeyword(String keyword) {  
+    public String getKnowErrorKeyword(String keyword) {
         String ret = "";
         try {
             ret = knowErrorDao.getKnowErrorKeywordSolr(keyword);
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
     }
-    
+
     //Retorno todos los Know Errors
     @Override
-    public String getKnowError() {  
+    public String getKnowError() {
         String ret = "";
         try {
             ret = knowErrorDao.getKnowErrorSolr();
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
-    }  
+    }
 
     @Override
     public String getKnowErrorMySql(String category) {
@@ -95,11 +93,11 @@ private UserDaoBeanService userDaoBeanService;
         try {
             ret = knowErrorDao.getKnowErrorMySql(ret);
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
     }
-    
+
     @Override
     public String getKnowErrorKeywordMySql(String keyword) {
         String ret = "";
@@ -107,21 +105,19 @@ private UserDaoBeanService userDaoBeanService;
         try {
             ret = knowErrorDao.getKnowErrorKeywordMySql(keyword);
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
     }
-    
+
     @Override
     public String getKnowErrorMySql() {
         String ret = "";
         try {
             ret = knowErrorDao.getKnowErrorMySql();
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);    
+            Logger.getLogger(KnowErrorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
     }
 }
-
-

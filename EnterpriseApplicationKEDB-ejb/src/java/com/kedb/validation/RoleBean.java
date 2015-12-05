@@ -1,4 +1,3 @@
-
 package com.kedb.validation;
 
 import com.kedb.entities.RoleEntity;
@@ -7,12 +6,11 @@ import com.kedb.persistence.RoleDaoService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-
 @Stateless
 public class RoleBean implements RoleBeanService {
-    
-@EJB
-private RoleDaoService roleDao;
+
+    @EJB
+    private RoleDaoService roleDao;
 
     @Override
     public void createRole(String description) {
@@ -31,7 +29,7 @@ private RoleDaoService roleDao;
 
     @Override
     public RoleEntity getRole(String description) throws ApplicationKEDBException {
-            RoleEntity roleAux = roleDao.getRole(description);
+        RoleEntity roleAux = roleDao.getRole(description);
         return roleAux;
-    }       
+    }
 }

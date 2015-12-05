@@ -1,16 +1,14 @@
-
 package com.kedb.validation;
 
 import com.kedb.persistence.CategoryDaoService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-
 @Stateless
 public class CategoryBean implements CategoryBeanService {
-    
-@EJB
-private CategoryDaoService categoryDao;
+
+    @EJB
+    private CategoryDaoService categoryDao;
 
     @Override
     public void createCategory(String description) {

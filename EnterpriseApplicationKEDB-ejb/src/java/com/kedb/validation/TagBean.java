@@ -1,16 +1,14 @@
-
 package com.kedb.validation;
 
 import com.kedb.persistence.TagDaoService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-
 @Stateless
 public class TagBean implements TagBeanService {
-    
-@EJB
-private TagDaoService tagDao;
+
+    @EJB
+    private TagDaoService tagDao;
 
     @Override
     public void createTag(String description) {

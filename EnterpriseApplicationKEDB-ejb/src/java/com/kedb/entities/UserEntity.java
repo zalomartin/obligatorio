@@ -17,27 +17,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedQueries({
     @NamedQuery(name = "UserEntity.getAllUsers", query = "SELECT u FROM UserEntity u "),
-    @NamedQuery(name = "UserEntity.findUserByName", query = "SELECT u FROM UserEntity u  WHERE upper(u.userName) = upper(:userName)") }
+    @NamedQuery(name = "UserEntity.findUserByName", query = "SELECT u FROM UserEntity u  WHERE upper(u.userName) = upper(:userName)")}
 )
 @Entity
 @Table(name = "USERS")
 @XmlRootElement
 public class UserEntity implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    private static final int MD5_PASSWORD_LENGTH = 16;   
-    
+    private static final int MD5_PASSWORD_LENGTH = 16;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private Long id;
-    
+
     @Column(name = "USER_NAME", nullable = false, unique = true)
     private String userName;
- 
+
     @JoinColumn(name = "USER_ROLE", nullable = true, unique = false)
     private RoleEntity role;
-    
+
     @Column(name = "USER_PWD", nullable = false)
     private String password;
 
@@ -74,7 +74,7 @@ public class UserEntity implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -84,13 +84,13 @@ public class UserEntity implements Serializable {
         UserEntity other = (UserEntity) obj;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
-    
+
     @Override
     public String toString() {
         return "com.kedb.entities.UserEntity[ id=" + id + " ]";
     }
-    
-     public String getPassword() {
+
+    public String getPassword() {
         return password;
     }
 
@@ -98,16 +98,16 @@ public class UserEntity implements Serializable {
         this.password = encriptPassword(password);
     }
 
-    //TODO: ver si se puede poner en un lugar mejor como Utilities
+    //TODO: ver si se puede poner en un lugar mejor como Utilities o Authentication
     public String encriptPassword(String password) throws ApplicationKEDBException {
-     try {
+        try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             md5.update(password.getBytes());
             BigInteger hash = new BigInteger(1, md5.digest());
             return hash.toString(MD5_PASSWORD_LENGTH);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ApplicationKEDBException("Error al generar clave");                    
-        }		   
+            throw new ApplicationKEDBException("Error al generar clave");
+        }
     }
 }

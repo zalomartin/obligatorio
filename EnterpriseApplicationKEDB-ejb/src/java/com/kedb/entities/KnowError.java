@@ -11,7 +11,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @Entity
 @Table(name = "KNOW_ERROR")
 @XmlRootElement
@@ -25,14 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 
 public class KnowError implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "KEDB_ID")
     private Long id;
-   
+
     @Column(name = "CAUSE", nullable = false, unique = false)
     private String cause;
     @Column(name = "SOLUTION", nullable = false, unique = false)
@@ -60,7 +59,7 @@ public class KnowError implements Serializable {
     public String getCategory() {
         return category;
     }
-    
+
     public void setCategory(String category) {
         this.category = category;
     }
@@ -103,7 +102,7 @@ public class KnowError implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -118,5 +117,5 @@ public class KnowError implements Serializable {
     public String toString() {
         return "kedb.entities.KnowError[ id=" + id + " ]";
     }
-    
+
 }

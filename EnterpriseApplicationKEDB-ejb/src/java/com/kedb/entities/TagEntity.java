@@ -9,19 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @Entity
 @Table(name = "TAGS")
 @XmlRootElement
 public class TagEntity implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "TAG_ID")        
+    @Column(name = "TAG_ID")
     private Long id;
-    
+
     @Column(name = "DESCRIPTION", nullable = false, unique = true)
     private String description;
 
@@ -50,7 +49,7 @@ public class TagEntity implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof TagEntity)) {
@@ -59,7 +58,7 @@ public class TagEntity implements Serializable {
         TagEntity other = (TagEntity) obj;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
-    
+
     @Override
     public String toString() {
         return "com.kedb.entities.TagEntity[ id=" + id + " ]";

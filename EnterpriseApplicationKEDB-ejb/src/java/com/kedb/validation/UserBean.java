@@ -18,10 +18,10 @@ public class UserBean implements UserBeanService {
 
     @Override
     public void createUser(String userName, String role, String password) throws ApplicationKEDBException {
-        if(userName==null || userName.isEmpty() || role==null || role.isEmpty() || password==null || password.isEmpty()){
-           throw new ApplicationKEDBException("\"Invalid Input, required fields: userName, role, password");
+        if (userName == null || userName.isEmpty() || role == null || role.isEmpty() || password == null || password.isEmpty()) {
+            throw new ApplicationKEDBException("\"Invalid input, required fields: userName, userRole, password");
         }
-        
+
         UserEntity user = userDao.getUser(userName);
         if (user == null) {
             RoleEntity roleEntity = roleBean.getRole(role);
@@ -31,22 +31,35 @@ public class UserBean implements UserBeanService {
                 userAux.setPassword(password);
                 userAux.setRole(roleEntity);
                 userDao.createUser(userAux);
-            }else{
-                throw new ApplicationKEDBException("Rol no existe");
+            } else {
+                throw new ApplicationKEDBException("Role does not exist");
             }
-        }else{
-            throw new ApplicationKEDBException("Usuario ya ingresado");
+        } else {
+            String ret = suggestedUser(user);
+            throw new ApplicationKEDBException("User already exists, suggested user " + ret);                
         }
     }
-
+    
+    //TODO agregar comentario
+    public String suggestedUser(UserEntity user) throws ApplicationKEDBException{
+        int i = 1;
+        String userName = "";
+        while (user != null){
+            userName = user.getUserName()+String.valueOf(i);
+            user = userDao.getUser(userName);
+            i++;
+        }
+        return userName;
+    }
+    
     @Override
     public void deleteUser(String userName) {
-      throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void modifyUser(String userName, UserEntity newUser) {
-      throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
