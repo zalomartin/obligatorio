@@ -1,4 +1,3 @@
-
 package com.kedb.webservices;
 
 import com.kedb.validation.UserBeanService;
@@ -18,10 +17,10 @@ import javax.ws.rs.Produces;
 @RequestScoped
 @Path("/users")
 public class UserWebService {
-    
+
     @EJB
     private UserBeanService userBeanService;
-      
+
     //Retorna la lista de usuarios
     @GET
     @Path("/listAllUsers")
@@ -29,31 +28,31 @@ public class UserWebService {
     public String getAllUsers() {
         return userBeanService.getAllUsers();
     }
-    
-    @POST 
+
+    @POST
     @Path("/createUser")
     @Consumes("application/x-www-form-urlencoded")
     public ResponseWebService createUser(@FormParam("userName") String userName, @FormParam("userRole") String userRole, @FormParam("userPwd") String userPwd) throws ApplicationKEDBException {
         ResponseWebService response = new ResponseWebService("");
-        try{                    
-            if(userName==null || userName.isEmpty() || userRole==null || userRole.isEmpty() || userPwd==null || userPwd.isEmpty()){
-              response.setMessage("Invalid Input, required fields: userName, userRole, userPwd");
+        try {
+            if (userName == null || userName.isEmpty() || userRole == null || userRole.isEmpty() || userPwd == null || userPwd.isEmpty()) {
+                response.setMessage("Invalid Input, required fields: userName, userRole, userPwd");
             }
             userBeanService.createUser(userName, userRole, userPwd);
-            response.setMessage("Usuario " + userName +" creado ok.");
-        }catch(Exception e){
-            response.setMessage("Se ha producido un error " + e);          
+            response.setMessage("Account user " + userName + " created successfully.");
+        } catch (Exception e) {
+            response.setMessage("" + e);
         }
-        return response;       
+        return response;
     }
-    
+
     @PUT
     @Path("/modifyUser")
     @Consumes("application/x-www-form-urlencoded")
     public String modifyUser(@FormParam("userName") String userName) {
         return "Not supported yet.";
     }
-    
+
     @DELETE
     @Path("/deleteUser")
     @Consumes("application/x-www-form-urlencoded")

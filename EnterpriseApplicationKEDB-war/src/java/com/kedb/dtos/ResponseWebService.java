@@ -11,13 +11,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author gonzalo
  */
-
 @XmlRootElement
 public class ResponseWebService {
+
     private String message;
 
     public ResponseWebService() {
     }
+
     public ResponseWebService(String message) {
         this.message = message;
     }
@@ -34,5 +35,5 @@ public class ResponseWebService {
     public String toString() {
         //TODO: definir codigos para identificar los errores
         return "ResponseWebService{message=" + message + '}';
-    } 
+    }
 }

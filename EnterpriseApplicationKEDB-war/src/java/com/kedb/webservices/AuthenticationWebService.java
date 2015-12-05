@@ -28,7 +28,7 @@ public class AuthenticationWebService {
     @EJB
     private AuthenticationBeanService autenticationBean;
 
-    @PermitAll 
+    @PermitAll
     @POST
     @Path("/login")
     @Consumes("application/x-www-form-urlencoded")
@@ -42,7 +42,7 @@ public class AuthenticationWebService {
             // Authenticate the user using the credentials provided            
             String responseBean = autenticationBean.autentication(userName, password);
             if (responseBean.equals("ERROR")) {
-                return Response.status(Response.Status.UNAUTHORIZED).build();                
+                return Response.status(Response.Status.UNAUTHORIZED).build();
             } else {
                 return Response.ok("ok " + responseBean).build();
             }
@@ -62,7 +62,7 @@ public class AuthenticationWebService {
 
         try {
             autenticationBean.logOut(userName);
-            return Response.ok("User "+ userName + "logut ok").build();
+            return Response.ok("User " + userName + "logut ok").build();
         } catch (Exception ex) {
             ex.printStackTrace();
             Response.status(Response.Status.UNAUTHORIZED);
