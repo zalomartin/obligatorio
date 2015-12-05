@@ -16,12 +16,12 @@ import org.apache.log4j.Logger;
 public class MessageLogger implements MessageLoggerLocal {
 
     private static Logger logger = Logger.getLogger(MessageLogger.class);
-    
+
     @Override
     public void logError(String message) {
-        this.logger.error(message);        
+        this.logger.error(message);
     }
-    
+
     @Override
     public void logDebug(String message) {
         this.logger.debug(message);
@@ -33,6 +33,5 @@ public class MessageLogger implements MessageLoggerLocal {
         this.logger.info(message);
         //System.out.println(message);
     }
-    
-    
+
 }

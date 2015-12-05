@@ -20,5 +20,5 @@ public interface MessageLoggerLocal {
     void logDebug(String message);
 
     void logInfo(String message);
-    
+
 }
