@@ -9,7 +9,7 @@ public interface UserBeanService {
 
     public void createUser(String userName, String role, String password) throws ApplicationKEDBException;
 
-    void deleteUser(String userName);
+    void deleteUser(String userName) throws ApplicationKEDBException;
 
     void modifyUser(String userName, UserEntity newUser);
 

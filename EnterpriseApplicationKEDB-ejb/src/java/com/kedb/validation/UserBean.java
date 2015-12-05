@@ -21,7 +21,6 @@ public class UserBean implements UserBeanService {
         if (userName == null || userName.isEmpty() || role == null || role.isEmpty() || password == null || password.isEmpty()) {
             throw new ApplicationKEDBException("\"Invalid input, required fields: userName, userRole, password");
         }
-
         UserEntity user = userDao.getUser(userName);
         if (user == null) {
             RoleEntity roleEntity = roleBean.getRole(role);
@@ -40,6 +39,20 @@ public class UserBean implements UserBeanService {
         }
     }
     
+    @Override
+    public void deleteUser(String userName) throws ApplicationKEDBException {
+        if (userName == null || userName.isEmpty()) {
+            throw new ApplicationKEDBException("\"Invalid input, required field: userName");
+        }
+        UserEntity user = userDao.getUser(userName);
+        if (user != null) {
+            //borrar usuario
+            
+        } else {
+            throw new ApplicationKEDBException("User "+userName+ "does not exists");                
+        }
+    }
+    
     //TODO agregar comentario
     public String suggestedUser(UserEntity user) throws ApplicationKEDBException{
         int i = 1;
@@ -50,11 +63,6 @@ public class UserBean implements UserBeanService {
             i++;
         }
         return userName;
-    }
-    
-    @Override
-    public void deleteUser(String userName) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
