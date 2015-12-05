@@ -1,5 +1,6 @@
 package com.kedb.webservices;
 
+import com.google.gson.Gson;
 import com.kedb.validation.UserBeanService;
 import com.kedb.dtos.ResponseWebService;
 import com.kedb.exceptions.ApplicationKEDBException;
@@ -36,7 +37,7 @@ public class UserWebService {
         ResponseWebService response = new ResponseWebService("");
         try {
             if (userName == null || userName.isEmpty() || userRole == null || userRole.isEmpty() || userPwd == null || userPwd.isEmpty()) {
-                response.setMessage("Invalid Input, required fields: userName, userRole, userPwd");
+                response.setMessage("Invalid input, required fields: userName, userRole, userPwd");
             }
             userBeanService.createUser(userName, userRole, userPwd);
             response.setMessage("Account user " + userName + " created successfully.");
@@ -55,8 +56,19 @@ public class UserWebService {
 
     @DELETE
     @Path("/deleteUser")
-    @Consumes("application/x-www-form-urlencoded")
-    public String deleteUser(@FormParam("userName") String userName) {
-        return "Not supported yet.";
+    @Produces("application/json")
+    public String deleteUser(@FormParam("userName") String userName) throws ApplicationKEDBException {
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            if (userName == null || userName.isEmpty()){
+                response.setMessage("Invalid input, required field: userName");
+            }
+            userBeanService.deleteUser(userName);
+            response.setMessage("Account user " + userName + " deleted successfully.");
+        } catch (Exception e){
+            response.setMessage("" + e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 }
