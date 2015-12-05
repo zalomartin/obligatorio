@@ -28,9 +28,8 @@ public class UserDaoBean implements UserDaoBeanService {
 
     @Override
     public void deleteUser(UserEntity user) {
-
+        em.remove(user);
         logger.logInfo("Se eliminó el usuario " + user.getUserName());
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

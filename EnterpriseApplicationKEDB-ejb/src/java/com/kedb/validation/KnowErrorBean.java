@@ -26,16 +26,17 @@ public class KnowErrorBean implements KnowErrorBeanService {
 
     @Override
     public String createKnowError(String cause, String solution, String workaround, String category, String token, String userName) {
-        String ret = "unauthorized operation";
+        String ret = "Unauthorized operation";
         try {
-            if (cause == null || cause.isEmpty() || solution == null || solution.isEmpty() || workaround == null || workaround.isEmpty() || category == null || category.isEmpty() || token == null || token.isEmpty() || userName == null || userName.isEmpty()) {
-                throw new ApplicationKEDBException("Invalid Input, required fields: cause, solution, workaround, category, token, userName");
-            }
+            if (cause == null || cause.isEmpty() || solution == null || solution.isEmpty() || workaround == null || workaround.isEmpty()
+                    || category == null || category.isEmpty() || token == null || token.isEmpty() || userName == null || userName.isEmpty()) {
 
+                throw new ApplicationKEDBException("Invalid input, required fields: cause, solution, workaround, category, token, userName");
+            }
             if (tokenBeanService.validToken(token)) {
                 UserEntity user = userDaoBeanService.getUser(userName);
                 String userRol = user.getRole().getDescription().toUpperCase();
-                String adminRol = EnumRoles.ADMIN.toString();
+                String adminRol = EnumRoles.Administrator.toString();
                 if (user != null && userRol.equals(adminRol)) {
                     KnowError knowErrorEntity = new KnowError();
                     knowErrorEntity.setCause(cause);
@@ -43,7 +44,7 @@ public class KnowErrorBean implements KnowErrorBeanService {
                     knowErrorEntity.setWorkaround(workaround);
                     knowErrorEntity.setCategory(category);
                     knowErrorDao.createKnowError(knowErrorEntity);
-                    ret = "OK";
+                    ret = "New Known Error created successfully.";
                 }
             }
         } catch (Exception ex) {

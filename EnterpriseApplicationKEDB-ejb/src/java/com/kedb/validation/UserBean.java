@@ -17,17 +17,17 @@ public class UserBean implements UserBeanService {
     private RoleBeanService roleBean;
 
     @Override
-    public void createUser(String userName, String role, String password) throws ApplicationKEDBException {
-        if (userName == null || userName.isEmpty() || role == null || role.isEmpty() || password == null || password.isEmpty()) {
-            throw new ApplicationKEDBException("\"Invalid input, required fields: userName, userRole, password");
+    public void createUser(String userName, String userRole, String userPwd) throws ApplicationKEDBException {
+        if (userName == null || userName.isEmpty() || userRole == null || userRole.isEmpty() || userPwd == null || userPwd.isEmpty()) {
+            throw new ApplicationKEDBException("\"Invalid input, required fields: userName, userRole, userPwd");
         }
         UserEntity user = userDao.getUser(userName);
         if (user == null) {
-            RoleEntity roleEntity = roleBean.getRole(role);
+            RoleEntity roleEntity = roleBean.getRole(userRole);
             if (roleEntity != null) {
                 UserEntity userAux = new UserEntity();
                 userAux.setUserName(userName);
-                userAux.setPassword(password);
+                userAux.setPassword(userPwd);
                 userAux.setRole(roleEntity);
                 userDao.createUser(userAux);
             } else {
@@ -46,10 +46,9 @@ public class UserBean implements UserBeanService {
         }
         UserEntity user = userDao.getUser(userName);
         if (user != null) {
-            //borrar usuario
-            
+            userDao.deleteUser(user);
         } else {
-            throw new ApplicationKEDBException("User "+userName+ "does not exists");                
+            throw new ApplicationKEDBException("User " +userName+ " does not exists");                
         }
     }
     

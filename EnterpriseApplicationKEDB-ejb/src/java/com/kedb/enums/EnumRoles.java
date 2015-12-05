@@ -10,7 +10,7 @@ package com.kedb.enums;
  * @author gonzalo
  */
 public enum EnumRoles {
-    ADMIN,
-    CONSULTA;
+    Administrator,
+    Read;
 }
 
