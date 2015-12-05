@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kedb.webservices;
 
 import com.kedb.authentication.AuthenticationBeanService;
 import com.kedb.authentication.TokenBeanService;
+import com.kedb.dtos.ResponseWebService;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
@@ -25,6 +21,7 @@ public class AuthenticationWebService {
 
     private static final long serialVersionUID = -6663599014192066936L;
 
+    /* Dependency injection. */
     @EJB
     private AuthenticationBeanService autenticationBean;
 
@@ -32,11 +29,10 @@ public class AuthenticationWebService {
     @POST
     @Path("/login")
     @Consumes("application/x-www-form-urlencoded")
-    public Response login(
-            @Context HttpHeaders httpHeaders,
-            @FormParam("username") String userName,
-            @FormParam("password") String password) throws LoginException {
-
+    public Response login(@Context HttpHeaders httpHeaders, @FormParam("userName") String userName, @FormParam("userPwd") String password)
+            throws LoginException {
+        
+        ResponseWebService response = new ResponseWebService("");
         try {
             System.out.println(userName + " " + password);
             // Authenticate the user using the credentials provided            

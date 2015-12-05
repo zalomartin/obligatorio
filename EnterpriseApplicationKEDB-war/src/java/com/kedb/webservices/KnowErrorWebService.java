@@ -1,5 +1,8 @@
 package com.kedb.webservices;
 
+import com.google.gson.Gson;
+import com.kedb.dtos.ResponseWebService;
+import com.kedb.exceptions.ApplicationKEDBException;
 import com.kedb.validation.KnowErrorBeanService;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
@@ -15,78 +18,120 @@ import javax.ws.rs.QueryParam;
 @Path("/knowError")
 public class KnowErrorWebService {
 
+    /* Dependency injection. */
     @EJB
     private KnowErrorBeanService knowErrorBeanService;
 
-    //CREACIÓN DE UN NUEVO KNOW ERROR 
-
+    /* Creation of a new Known Error. */
     @POST
     @Path("/createKE")
     @Consumes("application/x-www-form-urlencoded")
-    public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround, @FormParam("category") String category, @FormParam("token") String token, @FormParam("userName") String userName) {
+    public String addKnowError(@FormParam("cause") String cause, @FormParam("solution") String solution, @FormParam("workaround") String workaround,
+            @FormParam("category") String category, @FormParam("token") String token, @FormParam("userName") String userName)
+            throws ApplicationKEDBException {
 
-        if (cause == null || cause.isEmpty() || solution == null || solution.isEmpty() || workaround == null || workaround.isEmpty() || category == null || category.isEmpty() || token == null || token.isEmpty() || userName == null || userName.isEmpty()) {
-            return ("Invalid Input, required fields: cause, solution, workaround, category, token, userName");
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            if (cause == null || cause.isEmpty() || solution == null || solution.isEmpty() || workaround == null || workaround.isEmpty()
+                    || category == null || category.isEmpty() || token == null || token.isEmpty() || userName == null || userName.isEmpty()) {
+                response.setMessage("Invalid input, required fields: cause, solution, workaround, category, token, userName");
+            } else {
+                response.setMessage(knowErrorBeanService.createKnowError(cause, solution, workaround, category, token, userName));
+            }
+        } catch (Exception e) {
+            response.setMessage("" + e);
         }
-
-        String ret = knowErrorBeanService.createKnowError(cause, solution, workaround, category, token, userName);
-        if (ret != null && ret != "OK") {
-            return ret;
-        } else {
-            return "OK";
-        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 
-    //*******************************
-    //RETORNO DE KNOW ERRORS EN SOLR
-    //*******************************
-    //RETORNA TODOS LOS KNOW ERRORS
+    /* List all Known Error from Solr. */
     @GET
-    @Path("/getAllKE")
+    @Path("/listAllKE")
     @Produces("application/json")
     public String getAllKE() {
-        return knowErrorBeanService.getKnowError();
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            return knowErrorBeanService.getKnowError();
+        } catch (Exception e) {
+            response.setMessage("" + e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 
-    //RETORNA KNOW ERRORS FILTRADOS POR UNA CATEGORIA
+    /* List all Known Error from Solr matched with an specific category. */
     @GET
-    @Path("/getKECategory")
+    @Path("/listKECategory")
     @Produces("application/json")
     public String getKnowErrorCategory(@QueryParam("category") String category) {
-        return knowErrorBeanService.getKnowError(category);
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            return knowErrorBeanService.getKnowError(category);
+        } catch (Exception e) {
+            response.setMessage("" + e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 
-    //Retorna los KnowErrors filtrados por la palabra clave ingresada
+    /* List all Known Error from Solr matched with an specific keyword. */
     @GET
-    @Path("/getKEKeyword")
+    @Path("/listKEByKeyword")
     @Produces("application/json")
     public String getKnowErrorKeyword(@QueryParam("keyword") String keyword) {
-        return knowErrorBeanService.getKnowErrorKeyword(keyword);
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            return knowErrorBeanService.getKnowErrorKeyword(keyword);
+        } catch (Exception e) {
+            response.setMessage("" + e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 
-    //*******************************
-    //RETORNO DE KNOW ERRORS EN MYSQL
-    //*******************************
+    /* List all Known Error from MySQL. */
     @GET
-    @Path("/getAllKEMySql")
+    @Path("/listAllKEMySql")
     @Produces("application/json")
     public String getAllKEMySql() {
-        return knowErrorBeanService.getKnowErrorMySql();
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            return knowErrorBeanService.getKnowErrorMySql();
+        } catch (Exception e) {
+            response.setMessage("" + e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 
-    //Retorna los KnowErrors filtrados por la palabra clave ingresada en la BD MySql
+    /* List all Known Error from MySQL matched with an specific keyword. */
     @GET
-    @Path("/getKEKeywordMySql")
+    @Path("/listKEKeywordMySql")
     @Produces("application/json")
     public String getKnowErrorKeywordMySql(@QueryParam("keyword") String keyword) {
-        return knowErrorBeanService.getKnowErrorKeywordMySql(keyword);
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            return knowErrorBeanService.getKnowErrorKeywordMySql(keyword);
+        } catch (Exception e) {
+            response.setMessage("" + e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 
-    //Retorna los KnowErrors filtrados por la categoría que se ingreso de la BD MySql
+    /* List all Known Error from MySQL matched with an specific category. */
     @GET
-    @Path("/getKECategoryMySql")
+    @Path("/listKECategoryMySql")
     @Produces("application/json")
     public String getKnowErrorCategoryMySql(@QueryParam("category") String category) {
-        return knowErrorBeanService.getKnowErrorMySql(category);
+        ResponseWebService response = new ResponseWebService("");
+        try {
+            return knowErrorBeanService.getKnowErrorMySql(category);
+        } catch (Exception e) {
+            response.setMessage("" + e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 }

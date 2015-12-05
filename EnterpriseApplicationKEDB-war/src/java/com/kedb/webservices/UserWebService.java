@@ -22,7 +22,7 @@ public class UserWebService {
     @EJB
     private UserBeanService userBeanService;
 
-    //Retorna la lista de usuarios
+    /* List all users from MySQL. */
     @GET
     @Path("/listAllUsers")
     @Produces("application/json")
@@ -30,10 +30,14 @@ public class UserWebService {
         return userBeanService.getAllUsers();
     }
 
+    /* Create a new user account. */
     @POST
     @Path("/createUser")
     @Consumes("application/x-www-form-urlencoded")
-    public ResponseWebService createUser(@FormParam("userName") String userName, @FormParam("userRole") String userRole, @FormParam("userPwd") String userPwd) throws ApplicationKEDBException {
+    @Produces("application/json")
+    public ResponseWebService createUser(@FormParam("userName") String userName, @FormParam("userRole") String userRole, @FormParam("userPwd") 
+            String userPwd) throws ApplicationKEDBException {
+        
         ResponseWebService response = new ResponseWebService("");
         try {
             if (userName == null || userName.isEmpty() || userRole == null || userRole.isEmpty() || userPwd == null || userPwd.isEmpty()) {
@@ -47,6 +51,7 @@ public class UserWebService {
         return response;
     }
 
+    /* Modify user account. */
     @PUT
     @Path("/modifyUser")
     @Consumes("application/x-www-form-urlencoded")
@@ -54,21 +59,21 @@ public class UserWebService {
         return "Not supported yet.";
     }
 
+    /* Delete user account. */
     @DELETE
     @Path("/deleteUser")
     @Produces("application/json")
-    public String deleteUser(@FormParam("userName") String userName) throws ApplicationKEDBException {
+    public ResponseWebService deleteUser(@FormParam("userName") String userName) throws ApplicationKEDBException {
         ResponseWebService response = new ResponseWebService("");
         try {
-            if (userName == null || userName.isEmpty()){
+            if (userName == null || userName.isEmpty()) {
                 response.setMessage("Invalid input, required field: userName");
             }
             userBeanService.deleteUser(userName);
             response.setMessage("Account user " + userName + " deleted successfully.");
-        } catch (Exception e){
+        } catch (Exception e) {
             response.setMessage("" + e);
         }
-        Gson gson = new Gson();
-        return gson.toJson(response);
+        return response;
     }
 }
