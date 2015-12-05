@@ -25,25 +25,25 @@ import com.kedb.logger.MessageLoggerLocal;
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class MeessageReceiver implements MessageListener {
-    
+
     public MeessageReceiver() {
     }
-    
+
     @EJB
     private MessageLoggerLocal logger;
-            
+
     @Override
     public void onMessage(Message message) {
-        if(message instanceof TextMessage){
+        if (message instanceof TextMessage) {
             try {
-                TextMessage textMessage = (TextMessage)message;
-                System.out.println("El mensaje "+textMessage.getText()+" se recibió correctamente");
-                logger.logInfo("El mensaje "+textMessage.getText()+" se recibió correctamente");
+                TextMessage textMessage = (TextMessage) message;
+                System.out.println("El mensaje " + textMessage.getText() + " se recibió correctamente");
+                logger.logInfo("El mensaje " + textMessage.getText() + " se recibió correctamente");
             } catch (JMSException ex) {
                 Logger.getLogger(MeessageReceiver.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
-    
+
 }

@@ -23,21 +23,18 @@ import javax.naming.InitialContext;
  *
  * @author iscuro
  */
-
-
-
 @Stateless
 public class MessageProducerBean implements MessageProducerBeanLocal {
-    
+
     @Resource(lookup = "ConnectionFactory")
     private ConnectionFactory connectionFactory;
 
     @Resource(lookup = "jms/Queue")
     private Queue queue;
-    
+
     @Override
     public void theMessage(String theMessage) {
-        try{
+        try {
             Connection connection = connectionFactory.createConnection();
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer producer = session.createProducer(queue);
@@ -45,13 +42,12 @@ public class MessageProducerBean implements MessageProducerBeanLocal {
             message.setText(theMessage);
             producer.send(message);
             connection.close();
-        
-        }catch (Exception ex) { 
+
+        } catch (Exception ex) {
             Logger.getLogger(MessageProducerBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
 }
