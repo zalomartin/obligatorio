@@ -36,13 +36,14 @@ public class KnowErrorBean implements KnowErrorBeanService {
             if (tokenBeanService.validToken(token)) {
                 UserEntity user = userDaoBeanService.getUser(userName);
                 String userRol = user.getRole().getDescription().toUpperCase();
-                String adminRol = EnumRoles.Administrator.toString();
+                String adminRol = EnumRoles.ADMINISTRATOR.toString();
                 if (user != null && userRol.equals(adminRol)) {
                     KnowError knowErrorEntity = new KnowError();
                     knowErrorEntity.setCause(cause);
                     knowErrorEntity.setSolution(solution);
                     knowErrorEntity.setWorkaround(workaround);
                     knowErrorEntity.setCategory(category);
+                    knowErrorEntity.setAuthor(user);
                     knowErrorDao.createKnowError(knowErrorEntity);
                     ret = "New Known Error created successfully.";
                 }

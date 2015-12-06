@@ -3,6 +3,7 @@ package com.kedb.persistence;
 import com.google.gson.Gson;
 import com.kedb.configurations.Configuration;
 import com.kedb.entities.KnowError;
+import com.kedb.logger.MessageLoggerLocal;
 import com.kedb.messageProducer.MessageProducerBeanLocal;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
+import static org.apache.solr.store.hdfs.HdfsLocalityReporter.logger;
 import org.noggit.JSONUtil;
 
 @Stateless
@@ -28,20 +30,22 @@ public class KnowErrorDaoBean implements KnowErrorDao {
 
     @EJB
     private MessageProducerBeanLocal mdb;
+    @EJB
+    private MessageLoggerLocal logger;
 
     @Override
     public void createKnowError(KnowError knowError) {
         em.persist(knowError);
-        //TODO: validaciones,logica de bd, try generico + try para cada uno de los métodos
+        logger.logInfo("New Known Error " + knowError.getId() + " was created by " + knowError.getAuthor().getUserName());
         try {
             String solrPath = Configuration.getString("solr.path");
             HttpSolrClient solr = new HttpSolrClient(solrPath);
             SolrInputDocument document = new SolrInputDocument();
-            document.addField("id", knowError.getId());
-            document.addField("cause", knowError.getCause());
-            document.addField("solution", knowError.getSolution());
-            document.addField("workaround", knowError.getWorkaround());
-            document.addField("category", knowError.getCategory());
+            document.addField("KEDB_ID", knowError.getId());
+            document.addField("CATEGORY", knowError.getCategory());
+            document.addField("CAUSE", knowError.getCause());
+            document.addField("SOLUTION", knowError.getSolution());
+            document.addField("WORKAROUND", knowError.getWorkaround());
             UpdateRequest req = new UpdateRequest();
             req.setAction(UpdateRequest.ACTION.COMMIT, false, false);
             req.add(document);
@@ -64,7 +68,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
             client.setConnectionTimeout(5000);
             SolrQuery solrQuery = new SolrQuery();
             solrQuery.setQuery(cat);
-            solrQuery.setFields("ID", "CATEGORY", "CAUSE", "SOLUTION", "WORKAROUND");
+            solrQuery.setFields("KEDB_ID", "CAUSE", "SOLUTION", "WORKAROUND", "CATEGORY");
             solrQuery.setStart(0);
             solrQuery.setRows(200);
             QueryResponse response = client.query(solrQuery);
@@ -87,7 +91,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
             client.setConnectionTimeout(5000);
             SolrQuery solrQuery = new SolrQuery();
             solrQuery.setQuery(key);
-            solrQuery.setFields("ID", "CATEGORY", "CAUSE", "SOLUTION", "WORKAROUND");
+            solrQuery.setFields("KEDB_ID", "CAUSE", "SOLUTION", "WORKAROUND", "CATEGORY");
             solrQuery.setStart(0);
             solrQuery.setRows(200);
             QueryResponse response = client.query(solrQuery);
@@ -109,7 +113,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
             client.setConnectionTimeout(5000);
             SolrQuery solrQuery = new SolrQuery();
             solrQuery.setQuery("*:*");
-            solrQuery.setFields("ID", "CATEGORY", "CAUSE", "SOLUTION", "WORKAROUND");
+            solrQuery.setFields("KEDB_ID", "CAUSE", "SOLUTION", "WORKAROUND", "CATEGORY");
             solrQuery.setStart(0);
             solrQuery.setRows(25000);
             QueryResponse response = client.query(solrQuery);

@@ -23,18 +23,18 @@ public class UserDaoBean implements UserDaoBeanService {
     @Override
     public void createUser(UserEntity user) {
         em.persist(user);
-        logger.logInfo("Se agregó el usuario " + user.getUserName() + " con rol ");
+        logger.logInfo("New user " + user.getUserName() + " with role " + user.getRole().getDescription() + " was created");
     }
 
     @Override
     public void deleteUser(UserEntity user) {
         em.remove(user);
-        logger.logInfo("Se eliminó el usuario " + user.getUserName());
+        logger.logInfo("User " + user.getUserName() + " with role " + user.getRole().getDescription() + " was deleted");
     }
 
     @Override
     public void modifyUser(UserEntity user) {
-        logger.logInfo("Se modificó el usuario " + user.getUserName());
+        logger.logInfo("User " + user.getUserName() + " with role " + user.getRole().getDescription() + " was modified");
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

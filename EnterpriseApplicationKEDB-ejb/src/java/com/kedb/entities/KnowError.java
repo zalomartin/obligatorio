@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -40,6 +41,9 @@ public class KnowError implements Serializable {
     private String workaround;
     @Column(name = "CATEGORY", nullable = false, unique = false)
     private String category;
+    @JoinColumn(name = "AUTHOR", nullable = false, unique = false)
+    private UserEntity author;
+    
 
     public KnowError() {
     }
@@ -48,12 +52,13 @@ public class KnowError implements Serializable {
         this.id = id;
     }
 
-    public KnowError(Long id, String cause, String solution, String workaround, String category) {
+    public KnowError(Long id, String cause, String solution, String workaround, String category, UserEntity author) {
         this.id = id;
         this.cause = category;
         this.solution = solution;
         this.workaround = workaround;
         this.category = category;
+        this.author = author;
     }
 
     public String getCategory() {
@@ -94,6 +99,14 @@ public class KnowError implements Serializable {
 
     public void setCause(String cause) {
         this.cause = cause;
+    }
+    
+    public UserEntity getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserEntity author) {
+        this.author = author;
     }
 
     @Override
