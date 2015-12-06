@@ -1,6 +1,5 @@
 package com.kedb.webservices;
 
-import com.google.gson.Gson;
 import com.kedb.validation.UserBeanService;
 import com.kedb.dtos.ResponseWebService;
 import com.kedb.exceptions.ApplicationKEDBException;
@@ -43,7 +42,7 @@ public class UserWebService {
             if (userName == null || userName.isEmpty() || userRole == null || userRole.isEmpty() || userPwd == null || userPwd.isEmpty()) {
                 response.setMessage("Invalid input, required fields: userName, userRole, userPwd");
             }
-            userBeanService.createUser(userName, userRole, userPwd);
+            userBeanService.createUser(userName, userRole.toUpperCase(), userPwd);
             response.setMessage("Account user " + userName + " created successfully.");
         } catch (Exception e) {
             response.setMessage("" + e);

@@ -3,6 +3,8 @@ package com.kedb.webservices;
 import com.kedb.authentication.AuthenticationBeanService;
 import com.kedb.authentication.TokenBeanService;
 import com.kedb.dtos.ResponseWebService;
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
@@ -29,40 +31,42 @@ public class AuthenticationWebService {
     @POST
     @Path("/login")
     @Consumes("application/x-www-form-urlencoded")
-    public Response login(@Context HttpHeaders httpHeaders, @FormParam("userName") String userName, @FormParam("userPwd") String password)
+    public ResponseWebService login(@Context HttpHeaders httpHeaders, @FormParam("userName") String userName, @FormParam("userPwd") String userPass)
             throws LoginException {
-        
+
         ResponseWebService response = new ResponseWebService("");
         try {
-            System.out.println(userName + " " + password);
-            // Authenticate the user using the credentials provided            
-            String responseBean = autenticationBean.autentication(userName, password);
-            if (responseBean.equals("ERROR")) {
-                return Response.status(Response.Status.UNAUTHORIZED).build();
-            } else {
-                return Response.ok("ok " + responseBean).build();
+            if (userName == null || userName.isEmpty() || userPass == null || userPass.isEmpty()) {
+                response.setMessage("Invalid input, required field: userName, userPass");
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Response.status(Response.Status.UNAUTHORIZED);
+            // Authenticate the user using the credentials provided            
+            String responseBean = autenticationBean.autentication(userName, userPass);
+            if (responseBean.equals("ERROR")) {
+                response.setMessage("Invalid credentials");
+            } else {
+                response.setMessage("User " + userName + " authenticated successfully - Token " + responseBean);
+            }
+        } catch (Exception e) {
+            response.setMessage("" + e);
         }
-        return null;
+        return response;
     }
 
     @POST
-    @Path("/logOut")
+    @Path("/logout")
     @Consumes("application/x-www-form-urlencoded")
-    public Response logOut(
-            @Context HttpHeaders httpHeaders,
-            @FormParam("username") String userName) throws LoginException {
-
+    public ResponseWebService logOut(@Context HttpHeaders httpHeaders, @FormParam("username") String userName) throws LoginException {
+        ResponseWebService response = new ResponseWebService("");
+        String userNameAux = userName;
         try {
+            if (userName == null || userName.isEmpty()) {
+                response.setMessage("Invalid input, required field: userName");
+            }
             autenticationBean.logOut(userName);
-            return Response.ok("User " + userName + "logut ok").build();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Response.status(Response.Status.UNAUTHORIZED);
+            response.setMessage("User " + userNameAux + " successfully logout");
+        } catch (Exception e) {
+            response.setMessage("" + e);
         }
-        return null;
+        return response;
     }
 }
