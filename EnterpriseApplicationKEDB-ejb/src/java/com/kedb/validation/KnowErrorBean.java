@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.kedb.validation;
 
 import com.kedb.authentication.TokenBeanService;
-import com.kedb.entities.KnowError;
+import com.kedb.entities.KnowErrorEntity;
 import com.kedb.entities.UserEntity;
 import com.kedb.enums.EnumRoles;
 import com.kedb.exceptions.ApplicationKEDBException;
@@ -38,7 +43,7 @@ public class KnowErrorBean implements KnowErrorBeanService {
                 String userRol = user.getRole().getDescription().toUpperCase();
                 String adminRol = EnumRoles.ADMINISTRATOR.toString();
                 if (user != null && userRol.equals(adminRol)) {
-                    KnowError knowErrorEntity = new KnowError();
+                    KnowErrorEntity knowErrorEntity = new KnowErrorEntity();
                     knowErrorEntity.setCause(cause);
                     knowErrorEntity.setSolution(solution);
                     knowErrorEntity.setWorkaround(workaround);

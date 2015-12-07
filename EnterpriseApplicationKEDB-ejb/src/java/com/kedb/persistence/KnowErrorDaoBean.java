@@ -1,8 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.kedb.persistence;
 
 import com.google.gson.Gson;
 import com.kedb.configurations.Configuration;
-import com.kedb.entities.KnowError;
+import com.kedb.entities.KnowErrorEntity;
 import com.kedb.logger.MessageLoggerLocal;
 import com.kedb.messageProducer.MessageProducerBeanLocal;
 import java.util.List;
@@ -19,7 +24,6 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
-import static org.apache.solr.store.hdfs.HdfsLocalityReporter.logger;
 import org.noggit.JSONUtil;
 
 @Stateless
@@ -34,7 +38,7 @@ public class KnowErrorDaoBean implements KnowErrorDao {
     private MessageLoggerLocal logger;
 
     @Override
-    public void createKnowError(KnowError knowError) {
+    public void createKnowError(KnowErrorEntity knowError) {
         em.persist(knowError);
         logger.logInfo("New Known Error " + knowError.getId() + " was created by " + knowError.getAuthor().getUserName());
         try {
@@ -127,9 +131,9 @@ public class KnowErrorDaoBean implements KnowErrorDao {
 
     @Override
     public String getKnowErrorMySql(String category) {
-        List<KnowError> knowErrorAux = null;
+        List<KnowErrorEntity> knowErrorAux = null;
         String ret = "";
-        knowErrorAux = em.createNamedQuery("KnowError.getKECategory", KnowError.class).setParameter("category", category).getResultList();
+        knowErrorAux = em.createNamedQuery("KnowErrorEntity.getKECategory", KnowErrorEntity.class).setParameter("category", category).getResultList();
         Gson gson = new Gson();
         ret = gson.toJson(knowErrorAux);
         return ret;
@@ -137,9 +141,9 @@ public class KnowErrorDaoBean implements KnowErrorDao {
 
     @Override
     public String getKnowErrorKeywordMySql(String keyword) {
-        List<KnowError> knowErrorAux = null;
+        List<KnowErrorEntity> knowErrorAux = null;
         String ret = "";
-        knowErrorAux = em.createNamedQuery("KnowError.getKEKeyword", KnowError.class).setParameter("cause", keyword).setParameter("category", keyword).setParameter("workaround", keyword).setParameter("solution", keyword).getResultList();
+        knowErrorAux = em.createNamedQuery("KnowErrorEntity.getKEKeyword", KnowErrorEntity.class).setParameter("cause", keyword).setParameter("category", keyword).setParameter("workaround", keyword).setParameter("solution", keyword).getResultList();
         Gson gson = new Gson();
         ret = gson.toJson(knowErrorAux);
         return ret;
@@ -147,9 +151,9 @@ public class KnowErrorDaoBean implements KnowErrorDao {
 
     @Override
     public String getKnowErrorMySql() {
-        List<KnowError> knowErrorAux = null;
+        List<KnowErrorEntity> knowErrorAux = null;
         String ret = "";
-        knowErrorAux = em.createNamedQuery("KnowError.getAllKE", KnowError.class).getResultList();
+        knowErrorAux = em.createNamedQuery("KnowErrorEntity.getAllKE", KnowErrorEntity.class).getResultList();
         Gson gson = new Gson();
         ret = gson.toJson(knowErrorAux);
         return ret;

@@ -7,10 +7,6 @@ package com.kedb.exceptions;
 
 import javax.ejb.ApplicationException;
 
-/**
- *
- * @author nacho
- */
 @ApplicationException
 public class ApplicationKEDBException extends Exception {
 

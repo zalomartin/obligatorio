@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.kedb.entities;
 
 import java.io.Serializable;
@@ -17,14 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 
 @NamedQueries({
-    @NamedQuery(name = "KnowError.getKECategory", query = "SELECT k from KnowError k WHERE upper(k.category)=upper(:category)"),
-    @NamedQuery(name = "KnowError.getAllKE", query = "SELECT k from KnowError k"),
-    @NamedQuery(name = "KnowError.getKEKeyword", query = "SELECT k from KnowError k WHERE "
+    @NamedQuery(name = "KnowErrorEntity.getKECategory", query = "SELECT k from KnowErrorEntity k WHERE upper(k.category)=upper(:category)"),
+    @NamedQuery(name = "KnowErrorEntity.getAllKE", query = "SELECT k from KnowErrorEntity k"),
+    @NamedQuery(name = "KnowErrorEntity.getKEKeyword", query = "SELECT k from KnowErrorEntity k WHERE "
             + "(upper(k.cause) LIKE CONCAT ('%',upper (:cause),'%') OR (upper(k.category) LIKE CONCAT ('%',upper (:category),'%') OR "
             + "(upper(k.solution) LIKE CONCAT ('%',upper (:solution),'%') OR (upper(k.workaround) LIKE CONCAT ('%',upper (:workaround),'%')))))")}
 )
 
-public class KnowError implements Serializable {
+public class KnowErrorEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,14 +50,14 @@ public class KnowError implements Serializable {
     private UserEntity author;
     
 
-    public KnowError() {
+    public KnowErrorEntity() {
     }
 
-    public KnowError(Long id) {
+    public KnowErrorEntity(Long id) {
         this.id = id;
     }
 
-    public KnowError(Long id, String cause, String solution, String workaround, String category, UserEntity author) {
+    public KnowErrorEntity(Long id, String cause, String solution, String workaround, String category, UserEntity author) {
         this.id = id;
         this.cause = category;
         this.solution = solution;
@@ -119,10 +124,10 @@ public class KnowError implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof KnowError)) {
+        if (!(object instanceof KnowErrorEntity)) {
             return false;
         }
-        KnowError other = (KnowError) object;
+        KnowErrorEntity other = (KnowErrorEntity) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 

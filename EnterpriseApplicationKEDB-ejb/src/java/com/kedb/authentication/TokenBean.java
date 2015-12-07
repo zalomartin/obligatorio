@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.kedb.authentication;
 
 import java.math.BigInteger;
@@ -35,8 +40,6 @@ public class TokenBean implements TokenBeanService {
     public String getToken(String userName) {
         return this.serviceUsersKeysStorage.get(userName);
     }
-
-    //TODO: validar que no exista una entrada con ese token
 
     @Override
     @Lock(LockType.WRITE)
