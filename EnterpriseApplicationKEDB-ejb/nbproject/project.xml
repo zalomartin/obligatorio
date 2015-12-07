@@ -11,6 +11,8 @@
             <included-library dirs="200">file.reference.commons-codec-1.9.jar</included-library>
             <included-library dirs="200">file.reference.commons-logging.jar</included-library>
             <included-library dirs="200">file.reference.commons-net-3.3.jar</included-library>
+            <included-library dirs="200">file.reference.eclipselink.jar</included-library>
+            <included-library dirs="200">file.reference.gf-client.jar</included-library>
             <included-library dirs="200">file.reference.gson-2.2.4-javadoc.jar</included-library>
             <included-library dirs="200">file.reference.gson-2.2.4-sources.jar</included-library>
             <included-library dirs="200">file.reference.gson-2.2.4.jar</included-library>
@@ -18,8 +20,13 @@
             <included-library dirs="200">file.reference.httpclient-4.4.1.jar</included-library>
             <included-library dirs="200">file.reference.httpcore-4.4.1.jar</included-library>
             <included-library dirs="200">file.reference.httpmime-4.4.1.jar</included-library>
+            <included-library dirs="200">file.reference.javax.persistence_2.1.0.v201304241213.jar</included-library>
+            <included-library dirs="200">file.reference.jms.jar</included-library>
             <included-library dirs="200">file.reference.log4j-1.2.17.jar</included-library>
+            <included-library dirs="200">file.reference.mysql-connector-java-5.1.37-bin.jar</included-library>
             <included-library dirs="200">file.reference.noggit-0.5.jar</included-library>
+            <included-library dirs="200">file.reference.org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar</included-library>
+            <included-library dirs="200">file.reference.org.eclipse.persistence.jpa.modelgen_2.5.2.v20140319-9ad6abd.jar</included-library>
             <included-library dirs="200">file.reference.slf4j-api-1.6.1.jar</included-library>
             <included-library dirs="200">file.reference.solr-core-5.3.0.jar</included-library>
             <included-library dirs="200">file.reference.solr-solrj-5.3.0.jar</included-library>

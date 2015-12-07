@@ -39,8 +39,13 @@ public class KnowErrorDaoBean implements KnowErrorDao {
 
     @Override
     public void createKnowError(KnowErrorEntity knowError) {
-        em.persist(knowError);
-        logger.logInfo("New Known Error " + knowError.getId() + " was created by " + knowError.getAuthor().getUserName());
+        try{
+           em.persist(knowError);
+            logger.logInfo("New Known Error " + knowError.getId() + " was created by " + knowError.getAuthor().getUserName()); 
+        }catch(Exception ex){
+            logger.logError("An error ocurred inserting KE "+knowError.getId()+" in the database");
+        }
+        
         try {
             String solrPath = Configuration.getString("solr.path");
             HttpSolrClient solr = new HttpSolrClient(solrPath);
@@ -50,15 +55,17 @@ public class KnowErrorDaoBean implements KnowErrorDao {
             document.addField("CAUSE", knowError.getCause());
             document.addField("SOLUTION", knowError.getSolution());
             document.addField("WORKAROUND", knowError.getWorkaround());
+            document.addField("AUTOR", knowError.getAuthor());
             UpdateRequest req = new UpdateRequest();
             req.setAction(UpdateRequest.ACTION.COMMIT, false, false);
             req.add(document);
             UpdateResponse response = req.process(solr);
             solr.commit();
         } catch (Exception ex) {
-            Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(KnowErrorDaoBean.class.getName()).log(Level.SEVERE, null, ex);
+            logger.logError("An error ocurred inserting KE "+knowError.getId()+" in the searcher -Solr-");
         }
-        mdb.theMessage("Se registro un nuevo KE");
+        mdb.theMessage("MDB - New message for KE "+knowError.getId()+" was created");
     }
 
     @Override
