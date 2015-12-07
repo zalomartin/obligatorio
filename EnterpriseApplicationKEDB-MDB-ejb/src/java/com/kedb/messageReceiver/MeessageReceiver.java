@@ -34,8 +34,8 @@ public class MeessageReceiver implements MessageListener {
         if (message instanceof TextMessage) {
             try {
                 TextMessage textMessage = (TextMessage) message;
-                System.out.println("El mensaje " + textMessage.getText() + " se recibió correctamente");
-                logger.logInfo("El mensaje " + textMessage.getText() + " se recibió correctamente");
+                System.out.println("MDB - Message received OK: " + textMessage.getText());
+                logger.logInfo("MDB - Message received OK: " + textMessage.getText());
             } catch (JMSException ex) {
                 Logger.getLogger(MeessageReceiver.class.getName()).log(Level.SEVERE, null, ex);
             }
