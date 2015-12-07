@@ -8,10 +8,7 @@ package com.kedb.logger;
 import javax.ejb.Singleton;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author iscuro
- */
+
 @Singleton
 public class MessageLogger implements MessageLoggerLocal {
 

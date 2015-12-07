@@ -8,10 +8,7 @@ package com.kedb.logger;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 
-/**
- *
- * @author iscuro
- */
+
 @Local
 public interface MessageLoggerLocal {
 
