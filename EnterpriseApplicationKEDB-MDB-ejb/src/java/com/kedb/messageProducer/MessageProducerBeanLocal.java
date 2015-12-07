@@ -7,10 +7,7 @@ package com.kedb.messageProducer;
 
 import javax.ejb.Local;
 
-/**
- *
- * @author iscuro
- */
+
 @Local
 public interface MessageProducerBeanLocal {
 

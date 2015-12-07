@@ -19,10 +19,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-/**
- *
- * @author iscuro
- */
+
 @Stateless
 public class MessageProducerBean implements MessageProducerBeanLocal {
 

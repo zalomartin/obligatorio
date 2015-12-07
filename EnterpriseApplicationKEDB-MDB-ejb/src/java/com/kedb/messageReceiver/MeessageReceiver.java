@@ -16,10 +16,7 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import com.kedb.logger.MessageLoggerLocal;
 
-/**
- *
- * @author iscuro
- */
+
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/Queue"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
